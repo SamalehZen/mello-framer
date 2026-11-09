@@ -1259,3 +1259,31 @@
   .tst-quote { max-width: 576px; }
 }
 
+/* ---------- Testimonials — Tablet (768 – 1199.98px) ---------- */
+@media (min-width: 768px) and (max-width: 1199.98px) {
+  .tst-quote { font-size: 48px; line-height: 48px; letter-spacing: -0.48px; }
+}
+
+/* ---------- Testimonials — Mobile (max-width 767.98px) ---------- */
+@media (max-width: 767.98px) {
+  .tst { padding: 0 32px; }
+  .tst-card { gap: 40px; padding-bottom: 40px; }
+  .tst-deco { width: 64px; height: 64px; }
+  .tst-quote { max-width: 432px; font-size: 36px; line-height: 36px; letter-spacing: -0.36px; }
+  .tst-score p { font-size: 18px; line-height: 18.72px; }
+  .tst-nav { bottom: 40px; }
+}
+
+/* The font shorthand resets feature settings, so re-apply them last. */
+.tst, .tst * { font-feature-settings: 'blwf', 'cv03', 'cv04', 'cv09', 'cv11'; }
+
+@media (prefers-reduced-motion: reduce) {
+  .tst-card { transition: none !important; }
+  .tst-deco,
+  .tst-quote span,
+  .tst-rating,
+  .tst-btn { animation: none !important; opacity: 1 !important; transform: none !important; filter: none !important; }
+  .tst-btn { transition: none !important; }
+  .tst-arrow { transition: none !important; }
+}
+
