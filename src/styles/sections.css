@@ -1604,3 +1604,40 @@
 
 .visit, .visit * { font-feature-settings: 'blwf', 'cv03', 'cv04', 'cv09', 'cv11'; }
 
+/* ---------- Visit — Tablet (768 – 1199.98px) ---------- */
+@media (min-width: 768px) and (max-width: 1199.98px) {
+  .visit-info { grid-template-columns: repeat(2, minmax(1px, 1fr)); height: auto; }
+  .visit-pane-a { grid-column: 1; grid-row: 1; height: 480px; }
+  .visit-pane-b {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(1px, 1fr));
+    gap: 16px;
+  }
+  .visit-pane-b > .visit-rv-sweet { grid-column: 2; grid-row: 1; flex: none; }
+  .visit-pane-b > .visit-contact-items { grid-column: 1; grid-row: 1; flex-direction: column; }
+  .visit-pane-c { grid-column: 2; grid-row: 1; height: 480px; }
+
+  .visit-heading-inner { max-width: 408px; }
+  .visit-title { font-size: 68px; line-height: 68px; letter-spacing: -0.68px; }
+  .visit-accent1 { left: 2px; top: 16px; }
+  .visit-accent2 { --acc2-rot: -30deg; left: 770.547px; top: 127.844px; }
+
+  .visit-rv-contact { flex: none; width: 100%; }
+  .visit-rv-hello { flex: none; width: 100%; height: 84px; }
+  .visit-contact-address { width: 100%; }
+  .visit-contact-hello { width: 100%; height: 84px; flex-direction: row; align-items: center; gap: 24px; padding: 28px 24px; }
+  .visit-hello-text {
+    position: static;
+    width: auto;
+    flex: 1 1 auto;
+    transform: none;
+    font-size: 28px;
+    line-height: 28px;
+    letter-spacing: -0.28px;
+  }
+  .visit-mark-flower { margin-left: auto; }
+  .visit-mark-pin { width: 40px; }
+}
+
