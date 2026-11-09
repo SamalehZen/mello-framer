@@ -1060,3 +1060,13 @@
   .atmo-tab-title { font-size: 21px; line-height: 21px; letter-spacing: -0.21px; }
 }
 
+/* The font shorthand resets feature settings, so re-apply them last. */
+.atmo, .atmo * { font-feature-settings: 'blwf', 'cv03', 'cv04', 'cv09', 'cv11'; }
+
+@media (prefers-reduced-motion: reduce) {
+  .atmo-card, .atmo-title .w, .atmo-textwrap, .atmo-count, .atmo-icon, .atmo-h3text h3, .atmo-desc, .atmo-tab, .atmo-hot, .atmo-dot { animation: none !important; opacity: 1 !important; transform: none !important; }
+  .atmo-hot { transform: translate(-50%, -50%) !important; transition: none !important; }
+  .atmo-hot-inner, .atmo-tab, .atmo-tab-idx, .atmo-tab-title { transition: none !important; }
+  .atmo-photo { transition: none; }
+}
+
