@@ -850,3 +850,40 @@
 /* the `font` shorthand above resets feature settings, so re-apply to every descendant */
 .time, .time * { font-feature-settings: 'blwf', 'cv03', 'cv04', 'cv09', 'cv11'; }
 
+/* Reveal (enter) animation */
+.time-ch, .time-title .time-word, .time-sub, .time-card, .time-card-name, .time-big, .time-arrow, .time-cta { opacity: 0; }
+.time.is-in .time-ch { animation: time-ch-in 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: calc(var(--i) * 0.02s); }
+.time.is-in .time-title .time-word { animation: time-word-in 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: calc(0.06s + var(--i) * 0.045s); }
+.time.is-in .time-sub { animation: time-sub-in 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) 0.45s both; }
+.time.is-in .time-card { animation: time-card-in 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) 0.6s both; }
+.time.is-in .time-card-name { animation: time-name-in 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) 0.78s both; }
+.time-card-name-inner.is-pop { animation: time-name-pop 0.75s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.time.is-in .time-big { animation: time-big-in 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) 0.9s both; }
+.time.is-in .time-arrow { animation: time-arrow-in 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) 1.05s both; }
+.time.is-in .time-cta { animation: time-cta-in 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) 1.2s both; }
+
+@keyframes time-ch-in { from { opacity: 0.001; filter: blur(2px); transform: translateY(8px); } to { opacity: 1; filter: blur(0); transform: none; } }
+@keyframes time-word-in { from { opacity: 0.001; filter: blur(3px); transform: translateY(32px) scale(0.8); } to { opacity: 1; filter: blur(0); transform: none; } }
+@keyframes time-sub-in { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+@keyframes time-card-in { from { opacity: 0; transform: scale(0.9) translateY(32px); } to { opacity: 1; transform: none; } }
+@keyframes time-name-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@keyframes time-big-in { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+@keyframes time-arrow-in { from { opacity: 0; transform: translate(-24px, -24px) scale(0.1); } to { opacity: 1; transform: none; } }
+@keyframes time-cta-in { from { opacity: 0; transform: scale(0.8) translateY(32px); } to { opacity: 1; transform: none; } }
+@keyframes time-name-pop {
+  0% { transform: scaleX(1.1) translateX(8px); }
+  25% { transform: scaleX(1.02) translateX(1.7px); }
+  45% { transform: scaleX(0.991) translateX(-0.6px); }
+  70% { transform: none; }
+  82% { transform: scaleX(1.001) translateX(0.06px); }
+  100% { transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .time-ch, .time-title .time-word, .time-sub, .time-card, .time-card-name, .time-big, .time-arrow, .time-cta { opacity: 1; }
+  .time-cta-bg { transition: none; }
+  .time.is-in .time-ch, .time.is-in .time-title .time-word, .time.is-in .time-sub, .time.is-in .time-card,
+  .time.is-in .time-card-name, .time-card-name-inner.is-pop, .time.is-in .time-big, .time.is-in .time-arrow,
+  .time.is-in .time-cta { animation: none; }
+}
+
