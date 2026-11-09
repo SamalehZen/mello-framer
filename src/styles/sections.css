@@ -1148,3 +1148,78 @@
   will-change: transform, opacity, filter;
 }
 
+.tst-rating { display: flex; align-items: center; gap: 12px; opacity: 0; }
+.tst-score { display: flex; align-items: center; gap: 8px; }
+.tst-score-text { display: flex; align-items: center; justify-content: center; padding-top: 2px; }
+.tst-star {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  background: var(--grass);
+  -webkit-mask-image: var(--tst-star);
+  mask-image: var(--tst-star);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+.tst-score p { margin: 0; font: 400 21px/21.84px 'Gochi Hand', cursive; color: var(--ink); }
+.tst-divider { width: 12px; height: 2px; flex: none; background: var(--ink); }
+.tst-name { margin: 0; font: 500 18px/25.92px Inter, sans-serif; letter-spacing: -0.18px; color: var(--ink); white-space: nowrap; }
+
+.tst-nav {
+  position: absolute;
+  left: 50%;
+  bottom: 48px;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+  z-index: 3;
+}
+
+.tst-btn {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  margin: 0;
+  padding: 12px;
+  border: 0;
+  border-radius: 100px;
+  background: rgba(40, 64, 16, 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transform: scale(0.8);
+  -webkit-appearance: none;
+  appearance: none;
+  transition: background-color 700ms var(--tst-hover-ease);
+}
+.tst-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 3px solid var(--ink);
+  border-radius: 100px;
+  pointer-events: none;
+}
+.tst-btn:hover { background: var(--ink); }
+.tst-arrow {
+  width: 20px;
+  height: 20px;
+  background: var(--ink);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  transition: background-color 420ms cubic-bezier(0.25, 0.8, 0.2, 1);
+}
+.tst-prev .tst-arrow { -webkit-mask-image: var(--tst-arrow-left); mask-image: var(--tst-arrow-left); }
+.tst-next .tst-arrow { -webkit-mask-image: var(--tst-arrow-right); mask-image: var(--tst-arrow-right); }
+.tst-btn:hover .tst-arrow { background: var(--cream); }
+
