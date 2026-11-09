@@ -119,3 +119,11 @@
   .doodle-arrow { left: 205px; top: -44px; }
 }
 
+/* ---------- Doodle idle wiggle (measured: ~830 ms per cycle) ---------- */
+@keyframes wiggle-crown { from { transform: rotate(10deg); } to { transform: rotate(-10deg); } }
+@keyframes wiggle-sun { from { transform: rotate(20deg); } to { transform: rotate(0deg); } }
+@keyframes wiggle-flower { from { transform: rotate(20deg); } to { transform: rotate(0deg); } }
+.doodle-crown { animation: hero-crown-in 0.55s linear 0.9s both, wiggle-crown 0.42s ease-in-out infinite alternate; }
+.doodle-sun { animation: hero-sun-in 0.5s cubic-bezier(0.16, 0.84, 0.28, 1) 1.15s both, wiggle-sun 0.42s ease-in-out infinite alternate; }
+.doodle-flower { animation: wiggle-flower 0.42s ease-in-out infinite alternate; }
+
