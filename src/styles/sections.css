@@ -46,3 +46,29 @@
 .doodle-crown { position: absolute; left: calc(9% - 72px); top: -96px; width: 144px; height: 144px; transform: rotate(10deg); }
 .doodle-sun { position: absolute; left: calc(89% - 72px); top: -32px; width: 144px; height: 144px; transform: rotate(20deg); }
 
+/* ---------- Mobile (Framer breakpoint: max-width 767.98px) ---------- */
+@media (max-width: 767.98px) {
+  .info-bar { padding: 8px 0; overflow: hidden; }
+  .info-bar-inner { width: max-content; }
+  .site-header { padding: 32px 32px 0; }
+  .header-inner { width: 100%; height: 92px; gap: 16px; }
+  .logo { font-size: 40px; line-height: 40px; letter-spacing: -0.4px; }
+  .nav { gap: 6px; }
+  .hero { padding: 296px 32px 0; height: 100vh; min-height: 800px; max-height: 880px; }
+  .hero-content { width: 100%; margin: 0; }
+  .hero-title { font-size: 52px; line-height: 52px; letter-spacing: -0.52px; }
+  .hero-title .w + .w { margin-left: 9.891px; }
+  .hero-actions { flex-direction: column; gap: 12px; margin-top: 32px; }
+  .btn { width: 100%; }
+  .hero-media { margin-top: 104px; height: auto; aspect-ratio: 1072 / 804; }
+  .hero-img { width: 100%; height: 100%; }
+  .doodle-crown { left: calc(50% - 28px); top: -80px; width: 56px; height: 56px; }
+  .doodle-sun { display: none; }
+  .doodle-arrow { display: none; }
+  .hero-quality { left: auto; right: 28px; top: -40px; width: 142.609px; height: 37.4375px; }
+  .hero-hand { width: 100.609px; font-size: 18px; line-height: 18.72px; }
+  .doodle-flower { width: 32px; height: 32px; }
+  .hero-note { display: none; }
+  .note-title { font-size: 21px; line-height: 21px; }
+}
+
