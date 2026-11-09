@@ -1693,3 +1693,16 @@
   .visit-hours-text { font-size: 24px; line-height: 24px; letter-spacing: -0.24px; }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .visit-label-rv,
+  .visit-pane-a,
+  .visit-rv { opacity: 1 !important; transform: none !important; animation: none !important; }
+  .visit-accent1 { opacity: 1 !important; transform: rotate(var(--acc1-rot)) !important; animation: none !important; }
+  .visit-accent2 { opacity: 1 !important; transform: translateX(-50%) rotate(var(--acc2-rot)) !important; animation: none !important; }
+  .visit-label-ch,
+  .visit-word { opacity: 1 !important; filter: none !important; transform: none !important; animation: none !important; }
+  .visit-contact,
+  .visit-contact *,
+  .visit-mark { transition: none !important; }
+}
+
