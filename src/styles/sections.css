@@ -379,3 +379,111 @@
 /* match Framer's Inter OpenType features on every menu text node (font: shorthand resets them) */
 .menu, .menu * { font-feature-settings: 'blwf', 'cv03', 'cv04', 'cv09', 'cv11'; }
 
+/* ---------- Mood ---------- */
+.mood { position: relative; padding: 160px 64px; background: var(--ink); }
+.mood-content { position: relative; width: min(100%, 1200px); margin: 0 auto; display: flex; flex-direction: column; gap: 80px; }
+.mood-heading { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
+.mood-label { display: flex; align-items: center; gap: 12px; }
+.mood-label p { margin: 0; font: 400 21px/21.84px 'Gochi Hand', cursive; color: var(--cream); }
+.mood-label-dot { width: 8px; height: 8px; flex: none; border-radius: 100px; background: var(--grass); }
+.mood-title { margin: 0; width: 480px; font: 400 80px/80px 'Londrina Solid', sans-serif; letter-spacing: -0.8px; color: var(--cream); }
+.mood-title .w { display: inline-block; }
+.mood-ch { display: inline-block; }
+
+.mood-cupid { position: absolute; left: 836.2px; top: 88px; width: 200px; height: 142px; }
+.mood-cupid-shape { position: absolute; inset: 0; background: var(--grass);
+  -webkit-mask: url('../assets/img/mood-cupid.svg') center / 100% 100% no-repeat;
+  mask: url('../assets/img/mood-cupid.svg') center / 100% 100% no-repeat;
+  transform-origin: 100px 71px;
+  animation: wiggle-cupid-d 0.82s linear infinite; }
+@keyframes wiggle-cupid-d {
+  0%, 50% { transform: translateX(-100px) rotate(-10deg); }
+  50.001%, 100% { transform: translateX(-100px) rotate(-30deg); }
+}
+@keyframes wiggle-cupid {
+  0%, 50% { transform: rotate(-10deg); }
+  50.001%, 100% { transform: rotate(-30deg); }
+}
+
+.mood-main { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; width: 100%; }
+.mood-stage { position: relative; grid-column: 1 / span 6; height: 448px; display: flex; justify-content: flex-end; }
+.mood-spacer { grid-column: 7 / span 2; }
+
+.mood-wheel { position: relative; width: 448px; height: 448px; display: flex; flex-wrap: wrap; gap: 3px; background: var(--ink); }
+
+.mood-vtext { position: absolute; left: -52px; top: 223.8px; width: 144px; margin: 0; font: 500 14px/20.16px Inter, sans-serif;
+  letter-spacing: -0.14px; color: var(--cream);
+  transform-origin: 72px 20.156px; transform: translateY(-20.156px) rotate(-90deg); }
+
+.mood-quad { -webkit-appearance: none; appearance: none; margin: 0; border: 0; padding: 0; font: inherit; cursor: pointer;
+  display: flex; width: calc(50% - 1.5px); height: calc(50% - 1.5px); background: var(--cream); color: rgba(40, 64, 16, 0.6); }
+.mood-quad.is-active { background: var(--grass); color: var(--ink); }
+.mood-quad-tl { border-radius: 1000px 0 0 0; justify-content: flex-end; align-items: flex-end; padding: 0 40px 80px 0; }
+.mood-quad-tr { border-radius: 0 1000px 0 0; justify-content: flex-start; align-items: flex-end; padding: 0 0 80px 40px; }
+.mood-quad-bl { border-radius: 0 0 0 1000px; justify-content: flex-end; align-items: flex-start; padding: 80px 40px 0 0; }
+.mood-quad-br { border-radius: 0 0 1000px 0; justify-content: flex-start; align-items: flex-start; padding: 80px 0 0 40px; }
+.mood-quad:focus { outline: none; }
+.mood-quad:focus-visible { outline: 3px solid var(--grass); outline-offset: -3px; }
+
+.mood-quad-text { display: flex; flex-direction: column; align-items: center; gap: 6px; width: 128px; text-align: center; pointer-events: none; }
+.mood-quad-label { font: 400 16px/16.64px 'Gochi Hand', cursive; letter-spacing: normal; color: inherit; }
+.mood-quad-title { font: 400 24px/24px 'Londrina Solid', sans-serif; letter-spacing: -0.24px; color: inherit; white-space: nowrap; }
+
+.mood-wheel-center { position: absolute; left: 50%; top: 50%; width: 80px; height: 80px; transform: translate(-50%, -50%); }
+.mood-pointer { position: absolute; width: 104px; height: 26px; background: var(--ink);
+  -webkit-mask: url('../assets/img/mood-arrow.svg') center / 100% 100% no-repeat;
+  mask: url('../assets/img/mood-arrow.svg') center / 100% 100% no-repeat;
+  transform-origin: 0 0; transition: transform 0.35s cubic-bezier(0.25, 1.12, 0.4, 1),
+    left 0.35s cubic-bezier(0.25, 1.12, 0.4, 1), top 0.35s cubic-bezier(0.25, 1.12, 0.4, 1); }
+.mood-pointer-tl { left: 38px; top: 56px; }
+.mood-pointer-tr { left: 24px; top: 38px; }
+.mood-pointer-bl { left: 56px; top: 42px; }
+.mood-pointer-br { left: 42px; top: 24px; }
+.mood-wheel-circle { position: relative; display: flex; align-items: center; justify-content: center; width: 80px; height: 80px;
+  border-radius: 100px; background: var(--grass); }
+.mood-wheel-circle::after { content: ''; position: absolute; inset: 0; border: 3px solid var(--ink); border-radius: 100px; }
+.mood-heart { width: 32px; height: 32px; background: var(--ink);
+  -webkit-mask: url('../assets/img/mood-heart.svg') center / 100% 100% no-repeat;
+  mask: url('../assets/img/mood-heart.svg') center / 100% 100% no-repeat; }
+
+.mood-cream-arrow { position: absolute; left: calc(100% + 40px); top: 200px; width: 144px; height: 115px; background: var(--cream);
+  -webkit-mask: url('../assets/img/mood-arrow.svg') center / 100% auto no-repeat;
+  mask: url('../assets/img/mood-arrow.svg') center / 100% auto no-repeat;
+  transform: rotate(15deg); transform-origin: 72px 57.5px; }
+.mood-curve { display: none; position: absolute; background: url('../assets/img/mood-curve.svg') center / 100% auto no-repeat;
+  transform: rotate(45deg); pointer-events: none; }
+
+.mood-sparkle { position: absolute; left: auto; right: -16px; top: auto; bottom: -16px; width: 80px; height: 64px; background: var(--grass);
+  -webkit-mask: url('../assets/img/mood-sparkle.svg') center / 100% 100% no-repeat;
+  mask: url('../assets/img/mood-sparkle.svg') center / 100% 100% no-repeat;
+  transform: rotate(110deg); transform-origin: center;
+  animation: wiggle-sparkle 0.82s linear infinite; }
+@keyframes wiggle-sparkle {
+  0%, 50% { transform: rotate(110deg); }
+  50.001%, 100% { transform: rotate(130deg); }
+}
+
+.mood-card-wrap { grid-column: 9 / span 4; display: flex; align-items: center; justify-content: center; }
+.mood-card { display: flex; flex-direction: column; gap: 28px; width: 100%; height: 428px; padding: 12px;
+  background: var(--cream); border-radius: 24px;
+  animation: mood-appear 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) 0.15s both; }
+@keyframes mood-appear {
+  from { opacity: 0.001; transform: translateY(32px) scale(0.8) rotate(-10deg); }
+  to { opacity: 1; transform: none; }
+}
+.mood-card-img { flex: none; height: 242px; border-radius: 12px; overflow: hidden; }
+.mood-card-img img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.mood-card-info { display: flex; flex-direction: column; gap: 20px; flex: 1; min-height: 0; padding: 0 16px 16px; }
+.mood-card-text { display: flex; flex-direction: column; gap: 8px; }
+.mood-card-head { display: flex; flex-direction: column; gap: 4px; }
+.mood-card-tags { display: flex; align-items: center; gap: 6px; }
+.mood-card-tags p { margin: 0; font: 500 14px/20.16px Inter, sans-serif; letter-spacing: -0.14px; color: var(--ink); }
+.mood-tag-div { width: 3px; height: 3px; flex: none; border-radius: 100px; background: var(--ink); }
+.mood-card-name { margin: 0; font: 400 28px/28px 'Londrina Solid', sans-serif; letter-spacing: -0.28px; color: var(--ink); }
+.mood-card-desc { margin: 0; font: 500 14px/20.16px Inter, sans-serif; letter-spacing: -0.14px; color: var(--ink); }
+.mood-card-price { display: flex; align-items: center; gap: 6px; }
+.mood-price { margin: 0; font: 700 18px/18px Inter, sans-serif; letter-spacing: -0.36px; color: var(--ink); }
+.mood-vol { display: inline-flex; align-items: center; padding: 1px 4px; border-radius: 6px; background: rgba(40, 64, 16, 0.1);
+  font: 500 10px/14.4px Inter, sans-serif; letter-spacing: -0.1px; color: var(--ink); }
+
+/* Reveal (enter) animation — label, title words, cupid */
