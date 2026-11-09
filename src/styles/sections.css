@@ -5,3 +5,13 @@
   -webkit-mask: url('../assets/img/mood-heart.svg') center / 100% 100% no-repeat;
   mask: url('../assets/img/mood-heart.svg') center / 100% 100% no-repeat; }
 
+.top-stack { position: absolute; top: 0; left: 0; right: 0; z-index: 10; }
+.site-header { padding: 32px 64px 0; }
+.header-inner { width: 100%; max-width: 1200px; margin: 0 auto; height: 100px; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+.logo { font: 400 48px/48px 'Londrina Solid', sans-serif; letter-spacing: -0.48px; color: var(--ink); text-decoration: none; font-feature-settings: 'blwf', 'cv03', 'cv04', 'cv09', 'cv11'; }
+.nav { display: flex; align-items: center; gap: 6px; }
+.nav-link { position: relative; display: inline-flex; align-items: center; justify-content: center; padding: 8px 10px 10px; text-decoration: none; }
+.nav-pill { position: absolute; inset: 0; border-radius: 12px; background: var(--grass); transform: scale(0); transition: transform .2s cubic-bezier(.2,.7,.2,1); }
+.nav-link:hover .nav-pill { transform: scale(1); }
+.nav-label { position: relative; font: 700 18px/18px Inter, sans-serif; letter-spacing: -0.36px; color: var(--ink); font-feature-settings: 'blwf', 'cv03', 'cv04', 'cv09', 'cv11'; }
+
