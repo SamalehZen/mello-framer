@@ -72,3 +72,25 @@
   .note-title { font-size: 21px; line-height: 21px; }
 }
 
+/* ---------- Ticker (hero marquee) ---------- */
+.marquee { overflow: hidden; width: 100%; }
+.marquee-track { display: flex; width: max-content; will-change: transform; }
+.marquee-track > * + * { margin-left: 24px; }
+.ticker { position: relative; height: 72px; display: flex; align-items: center; background: var(--grass); padding: 24px 0; }
+.ticker-list { list-style: none; display: flex; gap: 24px; margin: 0; padding: 0; }
+.ticker-item { display: flex; align-items: center; gap: 24px; white-space: nowrap; font: 400 24px/24px 'Londrina Solid', sans-serif; letter-spacing: -0.24px; color: var(--ink); }
+.ticker-heart { width: 20px; height: 20px; flex: none; margin: 0; background: var(--ink);
+  -webkit-mask: url('../assets/img/mood-heart.svg') center / 100% 100% no-repeat;
+  mask: url('../assets/img/mood-heart.svg') center / 100% 100% no-repeat; }
+@media (max-width: 767.98px) {
+  .marquee-track > * + * { margin-left: 20px; }
+  .ticker { height: 61px; padding: 20px 0; z-index: 2; }
+  .ticker-list { gap: 20px; }
+  .ticker-item { gap: 20px; font-size: 21px; line-height: 21px; letter-spacing: -0.21px; }
+  .ticker-heart { width: 16px; height: 16px; margin: 0; }
+}
+
+@media (min-width: 768px) {
+  .hero { z-index: 2; }
+}
+
