@@ -1031,3 +1031,32 @@
   .atmo-hot { left: var(--x-t); top: var(--y-t); }
 }
 
+/* ---------- Atmosphere — Mobile (max-width 767.98px) ---------- */
+@media (max-width: 767.98px) {
+  .atmo { padding: 128px 32px 0; }
+  .atmo-content { gap: 64px; }
+  .atmo-heading { display: flex; flex-direction: column; align-items: stretch; gap: 16px; }
+  .atmo-labelh2 { gap: 12px; }
+  .atmo-label { gap: 10px; height: 18.72px; }
+  .atmo-label-text { font: 400 18px/18.72px 'Gochi Hand', cursive; }
+  .atmo-titlewrap { width: 288px; }
+  .atmo-title { font-size: 48px; line-height: 48px; letter-spacing: -0.48px; }
+  .atmo-textwrap { align-self: stretch; }
+  .atmo-para { width: 264px; }
+  .atmo-card { display: flex; flex-direction: column; height: auto; }
+  .atmo-card::after { z-index: 0; }
+  .atmo-info { order: 0; width: 100%; }
+  .atmo-image { order: 1; width: 100%; flex: none; aspect-ratio: 4 / 3; z-index: 1; }
+  .atmo-details { height: 360px; padding: 24px; }
+  .atmo-illus { flex-direction: column; gap: 32px; }
+  .atmo-h3text h3 { width: 192px; font-size: 32px; line-height: 32px; letter-spacing: -0.32px; }
+  .atmo-photo { left: var(--left-m); width: calc(100% + 50px); }
+  .atmo-hot { left: var(--x-m); top: var(--y-m); width: 40px; height: 40px; }
+  .atmo-hot-inner { width: 40px; height: 40px; }
+  .atmo-hot:hover:not(.is-active) { width: 46px; height: 46px; padding: 3px; }
+  .atmo-hot.is-active { width: 56px; height: 56px; padding: 4px; }
+  .atmo-hot.is-active .atmo-hot-inner { width: 48px; height: 48px; }
+  .atmo-tab { height: 61px; padding: 20px 24px; }
+  .atmo-tab-title { font-size: 21px; line-height: 21px; letter-spacing: -0.21px; }
+}
+
