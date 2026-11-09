@@ -547,3 +547,47 @@
   .mood-sparkle { left: auto; right: 16px; top: auto; bottom: 16px; width: 80px; height: 64px; transform: rotate(130deg); animation: none; }
 }
 
+/* ---------- Mood — Mobile (≤ 767.98px) ---------- */
+@media (max-width: 767.98px) {
+  .mood { padding: 128px 32px; }
+  .mood-content { gap: 64px; }
+  .mood-heading { gap: 12px; }
+  .mood-label { gap: 10px; }
+  .mood-label p { font-size: 18px; line-height: 18.72px; }
+  .mood-title { width: 100%; max-width: 288px; font-size: 48px; line-height: 48px; letter-spacing: -0.48px; }
+  .mood-cupid { display: none; }
+  .mood-main { display: flex; flex-direction: column; gap: 120px; }
+  .mood-stage { display: flex; flex-direction: column; align-items: center; gap: 24px; height: auto; }
+  .mood-wheel { width: 100%; height: auto; aspect-ratio: 1 / 1; flex: none; }
+  .mood-vtext { position: static; width: 144px; transform: none; }
+  .mood-quad-tl { padding: 0 8px 40px 0; }
+  .mood-quad-tr { padding: 0 0 40px 8px; }
+  .mood-quad-bl { padding: 40px 8px 0 0; }
+  .mood-quad-br { padding: 40px 0 0 8px; }
+  .mood-quad-title { font-size: 21px; line-height: 21px; letter-spacing: -0.21px; }
+  .mood-wheel-center { width: 64px; height: 64px; }
+  .mood-wheel-circle { width: 64px; height: 64px; }
+  .mood-pointer { width: 64px; height: 16px; }
+  .mood-pointer-tl { left: 27px; top: 41px; }
+  .mood-pointer-tr { left: 25px; top: 30px; }
+  .mood-pointer-bl { left: 40px; top: 34px; }
+  .mood-pointer-br { left: 35px; top: 25px; }
+  .mood-spacer { display: none; }
+  .mood-card-wrap { width: 100%; height: auto; }
+  .mood-card { width: min(100%, 400px); height: auto; margin: 0 auto; padding: 8px; gap: 24px; }
+  .mood-card-img { height: auto; aspect-ratio: 4 / 3; }
+  .mood-card-name { font-size: 24px; line-height: 24px; letter-spacing: -0.24px; }
+  .mood-cream-arrow { display: none; }
+  .mood-curve { display: block; left: 40px; top: calc(100% + 31.012px); width: 80px; height: 64px; }
+  .mood-sparkle { left: calc(100% - 48px); right: auto; top: calc(100% - 29.968px); bottom: auto; width: 48px; height: 38px; transform: rotate(110deg); }
+}
+
+/* Mood — reduced motion: freeze the cupid wiggle on its resting pose */
+@media (prefers-reduced-motion: reduce) {
+  .mood-cupid-shape { animation: none; transform: translateX(-100px) rotate(-10deg); }
+}
+@media (prefers-reduced-motion: reduce) and (min-width: 768px) and (max-width: 1199.98px) {
+  .mood-cupid-shape { transform: rotate(-10deg); }
+}
+
+/* ================= Philosophy ================= */
