@@ -990,3 +990,26 @@
 .atmo-tab:hover .atmo-tab-idx, .atmo-tab.is-active .atmo-tab-idx { color: rgba(233, 235, 223, 0.6); }
 .atmo-tab:hover .atmo-tab-title, .atmo-tab.is-active .atmo-tab-title { color: var(--cream); }
 
+@keyframes atmo-blink {
+  0%, 41% { opacity: 0; }
+  50%, 91% { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes atmo-word-in {
+  0% { opacity: 0; transform: translateY(32px) scale(0.8); }
+  45% { opacity: 1; transform: translateY(-5.2px) scale(1.032); }
+  66% { opacity: 1; transform: translateY(1.6px) scale(0.996); }
+  83% { opacity: 1; transform: translateY(-0.5px) scale(1.002); }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes atmo-card-in {
+  0% { opacity: 0; transform: translateY(32px) scale(0.9); }
+  60% { opacity: 1; transform: translateY(-3px) scale(1.004); }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes atmo-rise-12 { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@keyframes atmo-rise-24 { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+@keyframes atmo-icon-in { from { opacity: 0; transform: translateY(24px) scale(0.8); } to { opacity: 1; transform: none; } }
+@keyframes atmo-tab-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@keyframes atmo-hot-in { from { opacity: 0; transform: translate(-50%, -50%) scale(0.8); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
+
