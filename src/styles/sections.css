@@ -363,3 +363,19 @@
   .menu-cats { grid-template-columns: repeat(2, 1fr); column-gap: 64px; row-gap: 80px; justify-content: stretch; }
 }
 
+/* ---------- Menu — Mobile (≤ 767.98px) ---------- */
+@media (max-width: 767.98px) {
+  .menu { padding: 128px 32px; }
+  .menu-heading { gap: 19px; }
+  .menu-heart-rv { width: 74px; height: 74px; margin-top: -5px; }
+  .menu-title { font-size: 48px; line-height: 48px; letter-spacing: -0.48px; }
+  .menu-title .w + .w { margin-left: 9px; }
+  .menu-info { margin-top: 80px; }
+  .menu-cats { grid-template-columns: 1fr; row-gap: 64px; }
+  .menu-cat-title { font-size: 24px; line-height: 24px; letter-spacing: -0.24px; }
+  .menu-cat-title .w + .w { margin-left: 4.5px; }
+}
+
+/* match Framer's Inter OpenType features on every menu text node (font: shorthand resets them) */
+.menu, .menu * { font-feature-settings: 'blwf', 'cv03', 'cv04', 'cv09', 'cv11'; }
+
