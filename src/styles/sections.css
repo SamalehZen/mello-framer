@@ -1,0 +1,7 @@
+.info-bar { height: 36.16px; background: var(--grass); display: flex; align-items: center; justify-content: center; padding: 8px 64px; color: var(--ink); }
+.info-bar-inner { display: flex; align-items: center; gap: 12px; }
+.info-text { margin: 0; font: 500 14px/20.16px Inter, sans-serif; letter-spacing: -0.14px; white-space: nowrap; font-feature-settings: 'blwf', 'cv03', 'cv04', 'cv09', 'cv11'; }
+.info-heart { width: 12px; height: 12px; flex: none; display: block; background: currentColor;
+  -webkit-mask: url('../assets/img/mood-heart.svg') center / 100% 100% no-repeat;
+  mask: url('../assets/img/mood-heart.svg') center / 100% 100% no-repeat; }
+
