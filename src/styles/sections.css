@@ -511,3 +511,16 @@
   .mood-pointer { transition: none; }
 }
 
+/* ---------- Mood — Desktop wide (≥ 1200px): fluid wheel / card / arrows ---------- */
+@media (min-width: 1200px) {
+  /* source: wheel = (6 cols + 5 gaps) - 80px padding, square; row height follows it */
+  .mood-cupid { left: 78%; }
+  .mood-stage { height: auto; align-items: center; }
+  .mood-wheel { width: calc(100% - 80px); height: auto; aspect-ratio: 1 / 1; }
+  .mood-vtext { top: calc(50% - 0.2px); }
+  /* source: arrow right:-184px / top:200px ; sparkle right:-16px / bottom:-16px (anchored to stage) */
+  .mood-card-wrap { justify-content: flex-end; }
+  .mood-card { width: min(360px, 100%); height: auto; }
+  .mood-card-img { aspect-ratio: 4 / 3; height: auto; }
+}
+
