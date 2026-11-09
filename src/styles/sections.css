@@ -182,3 +182,46 @@
   .hero-img, .hero-note, .doodle-arrow, .hero-quality, .hero-title .w { animation: none; }
 }
 
+/* ---------- Products ---------- */
+.products { position: relative; padding: 160px 64px 0; }
+.products-content { width: min(100%, 1200px); margin: 0 auto; }
+.products-head { display: flex; justify-content: space-between; align-items: flex-end; height: 198px; }
+.products-label { position: relative; margin: 0 0 16px; font: 400 21px/21.84px 'Gochi Hand', cursive; color: var(--ink); padding-left: 20px; }
+.products-label::before { content: ''; position: absolute; left: 0; top: 50%; width: 8px; height: 8px; margin-top: -4px; border-radius: 100px; background: var(--grass); animation: atmo-blink 1.23s linear infinite; }
+.products-title { margin: 0; font: 400 80px/80px 'Londrina Solid', sans-serif; letter-spacing: -0.8px; color: var(--ink); }
+.products-title .line { display: block; }
+.products-title .w { display: inline-block; }
+.products-title .w + .w { margin-left: 15px; }
+.products-intro { margin: 0; width: 256px; text-align: right; font: 500 18px/25.92px Inter, sans-serif; color: var(--ink); }
+
+.products-grid { display: flex; gap: 16px; margin-top: 79.8px; }
+.products-grid > .pcard { flex: 1; height: 640px; }
+.products-col { display: flex; flex-direction: column; gap: 16px; flex: 1; }
+.products-row { display: flex; gap: 16px; }
+.pcard { position: relative; border-radius: 24px; overflow: hidden; }
+.products-col > .pcard { height: 337.6px; }
+.products-row .pcard { flex: 1; height: 286.4px; }
+.pcard-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.pcard-veil { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 35%, rgba(0, 0, 0, 0.75) 100%); }
+.pcard-badge { position: absolute; left: 28px; top: 24px; display: inline-flex; align-items: center; justify-content: center; height: 29px; padding: 0 12px; border-radius: 48px; background: var(--grass); font: 400 16px/16.64px 'Gochi Hand', cursive; color: var(--ink); }
+.pcard-accent { background: var(--grass); }
+.pcard-black { background: var(--ink); }
+.pcard-top { position: absolute; left: 28px; right: 28px; top: 28px; display: flex; justify-content: space-between; align-items: flex-start; }
+.pcard-illo { width: 70px; height: 48.1px; display: block; }
+.pcard-note { width: 74px; text-align: center; font: 400 16px/16.64px 'Gochi Hand', cursive; color: inherit; }
+.pcard-accent .pcard-note { color: var(--ink); }
+.pcard-black .pcard-note { color: var(--cream); width: 87px; }
+
+.card-body { position: absolute; left: 28px; right: 28px; bottom: 28px; }
+.pcard-photo .card-body { color: var(--cream); }
+.pcard-accent .card-body { color: var(--ink); }
+.pcard-black .card-body { color: var(--cream); }
+.card-details { display: inline-flex; align-items: center; gap: 6px; font: 500 14px/20.16px Inter, sans-serif; }
+.card-dot { width: 3px; height: 3px; border-radius: 100px; background: currentColor; }
+.card-title { margin: 4px 0 8px; font: 400 40px/40px 'Londrina Solid', sans-serif; letter-spacing: -0.4px; color: inherit; }
+.card-desc { margin: 0 0 20px; font: 500 14px/20.16px Inter, sans-serif; color: inherit; opacity: 1; }
+.card-price { margin: 0; display: flex; align-items: center; gap: 10px; font: 700 18px/18px Inter, sans-serif; color: inherit; }
+.card-chip { display: inline-flex; align-items: center; height: 16px; padding: 0 6px; border-radius: 6px; background: rgba(233, 235, 223, 0.2); font: 500 10px/14.4px Inter, sans-serif; }
+.pcard-accent .card-chip { background: rgba(40, 64, 16, 0.16); }
+.pcard-accent .card-title, .pcard-black .card-title { font-size: 28px; line-height: 28px; }
+
