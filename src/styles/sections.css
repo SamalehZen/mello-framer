@@ -1342,3 +1342,57 @@
   gap: 16px;
 }
 
+.visit-label-rv { opacity: 0; transform: translateY(12px); will-change: transform, opacity; }
+.visit-label { display: flex; align-items: center; gap: 12px; }
+.visit-label-dot { width: 8px; height: 8px; flex: none; border-radius: 100px; background: var(--grass); }
+.visit-label-text { margin: 0; font: 400 21px/21.84px 'Gochi Hand', cursive; color: var(--cream); white-space: nowrap; }
+.visit-label-word { white-space: nowrap; }
+.visit-label-ch {
+  display: inline-block;
+  opacity: 0.001;
+  filter: blur(2px);
+  transform: translateY(8px);
+  will-change: transform, opacity, filter;
+}
+
+.visit-accent1 {
+  --acc1-rot: 20deg;
+  position: absolute;
+  left: 24px;
+  top: 16px;
+  width: 29px;
+  height: 48px;
+  background: var(--grass);
+  -webkit-mask-image: url('../assets/img/visit/visit-accent1.svg');
+  mask-image: url('../assets/img/visit/visit-accent1.svg');
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: 50% 50%;
+  mask-position: 50% 50%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: 0;
+  transform: translate(12px, 12px) scale(0.8) rotate(var(--acc1-rot));
+  will-change: transform, opacity;
+}
+.visit-accent2 {
+  --acc2-rot: -45deg;
+  position: absolute;
+  left: 876px;
+  top: 141.844px;
+  width: 41px;
+  height: 80px;
+  background: var(--grass);
+  -webkit-mask-image: url('../assets/img/visit/visit-accent2.svg');
+  mask-image: url('../assets/img/visit/visit-accent2.svg');
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: 50% 50%;
+  mask-position: 50% 50%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: 0;
+  transform: translateX(calc(-50% - 12px)) translateY(-12px) scale(0.2) rotate(var(--acc2-rot));
+  will-change: transform, opacity;
+}
+
