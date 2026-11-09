@@ -819,3 +819,34 @@
 .time-tab-name { font: 400 24px/24px 'Londrina Solid', sans-serif; letter-spacing: -0.24px; }
 .time-tab-icon { width: 24px; height: 24px; }
 
+/* Icon masks */
+.time-icon { display: block; flex: none; background: currentColor;
+  -webkit-mask-position: center; mask-position: center;
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-size: contain; mask-size: contain; }
+.time-icon-crown { -webkit-mask-image: url('../assets/img/time/crown.svg'); mask-image: url('../assets/img/time/crown.svg'); }
+.time-icon-star { -webkit-mask-image: url('../assets/img/time/star.svg'); mask-image: url('../assets/img/time/star.svg'); }
+.time-icon-heart { -webkit-mask-image: url('../assets/img/time/heart.svg'); mask-image: url('../assets/img/time/heart.svg'); }
+.time-icon-plus { -webkit-mask-image: url('../assets/img/time/plus.svg'); mask-image: url('../assets/img/time/plus.svg'); }
+
+/* Arrow */
+.time-arrow { position: absolute; right: 224px; bottom: 30px; width: 96px; aspect-ratio: 96 / 49; z-index: 1; }
+.time-arrow-shape { display: block; width: 100%; height: 100%; background: var(--ink); transform: rotate(15deg);
+  -webkit-mask: url('../assets/img/time/arrow.svg') center / contain no-repeat;
+  mask: url('../assets/img/time/arrow.svg') center / contain no-repeat; }
+
+/* CTA */
+.time-cta { position: relative; display: inline-flex; align-items: center; justify-content: center; padding: 24px 28px;
+  border-radius: 20px; background: var(--grass); overflow: clip; text-decoration: none; }
+.time-cta::after { content: ''; position: absolute; inset: 0; border: 3px solid var(--grass); border-radius: 20px;
+  pointer-events: none; z-index: 2; }
+.time-cta-bg { position: absolute; inset: 0; z-index: 0; border-radius: 20px; background: var(--cream);
+  transform: scaleX(0.0049) scaleY(0.0152); transform-origin: 49.7537% 100%;
+  transition: transform 0.55s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.time-cta:hover .time-cta-bg { transform: none; }
+.time-cta-text { position: relative; z-index: 1; white-space: nowrap; font: 700 18px/18px Inter, sans-serif;
+  letter-spacing: -0.36px; color: var(--ink); }
+
+/* the `font` shorthand above resets feature settings, so re-apply to every descendant */
+.time, .time * { font-feature-settings: 'blwf', 'cv03', 'cv04', 'cv09', 'cv11'; }
+
