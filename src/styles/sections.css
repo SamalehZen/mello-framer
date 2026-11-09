@@ -104,3 +104,18 @@
   .nav-pill { transition: none; }
 }
 
+/* ---------- Tablet (768 – 1199.98px) ---------- */
+@media (min-width: 768px) and (max-width: 1199.98px) {
+  .hero { padding-top: 320px; min-height: 880px; }
+  .hero-content { width: min(100% - 128px, 1072px); }
+  .hero-title { font-size: 88px; line-height: 88px; letter-spacing: -0.88px; }
+  .hero-title .w + .w { margin-left: 16.734px; }
+  .hero-media { height: auto; aspect-ratio: 1072 / 804; margin-top: 160px; }
+  .hero-img { width: 100%; height: 100%; }
+  .doodle-crown { left: calc(50% - 40px); top: -96px; width: 80px; height: 80px; }
+  .doodle-sun { display: none; }
+  .hero-note { left: 0; top: -64px; }
+  .hero-quality { left: auto; right: 73px; top: -32px; }
+  .doodle-arrow { left: 205px; top: -44px; }
+}
+
