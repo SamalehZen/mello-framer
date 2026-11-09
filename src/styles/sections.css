@@ -679,3 +679,49 @@
   -webkit-mask-position: center; mask-position: center;
   -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; }
 
+/* Reveal (enter) animation */
+.philosophy-label, .philosophy-ch, .philosophy-dot, .philosophy-title .w, .philosophy-para,
+.philosophy-receipt, .philosophy-heart, .philosophy-spark { opacity: 0; }
+.philosophy.is-in .philosophy-label { animation: philo-label-in 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.philosophy.is-in .philosophy-dot { animation: philo-dot-in 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) 0.05s both; }
+.philosophy.is-in .philosophy-ch { animation: philo-ch-in 0.4s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: calc(0.2s + var(--i) * 0.045s); }
+.philosophy.is-in .philosophy-title .w { animation: philo-word-in 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: calc(0.08s + var(--i) * 0.06s); }
+.philosophy.is-in .philosophy-para { animation: philo-para-in 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) 0.34s both; }
+.philosophy.is-in .philosophy-receipt { animation: philo-receipt-in 0.7s cubic-bezier(0.22, 1.06, 0.36, 1) 0.12s both; }
+.philosophy.is-in .philosophy-heart { animation: philo-heart-in 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: calc(0.25s + var(--i, 0) * 0.08s); }
+.philosophy.is-in .philosophy-spark { animation: philo-heart-in 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) 0.3s both; }
+
+@keyframes philo-label-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@keyframes philo-dot-in { from { opacity: 0; transform: scale(0.6); } to { opacity: 1; transform: none; } }
+@keyframes philo-ch-in { from { opacity: 0.001; filter: blur(2px); transform: translateY(8px); } to { opacity: 1; filter: blur(0); transform: none; } }
+@keyframes philo-word-in {
+  0% { opacity: 0.001; filter: blur(3px); transform: translateY(32px) scale(0.8); }
+  40% { opacity: 1; filter: blur(0); transform: translateY(0) scale(1.03); }
+  72% { transform: translateY(0) scale(0.995); }
+  100% { opacity: 1; filter: blur(0); transform: none; }
+}
+@keyframes philo-para-in { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+@keyframes philo-receipt-in {
+  0% { opacity: 0; transform: translateX(48px) rotate(-15deg) scale(0.8); }
+  55% { opacity: 1; transform: translateX(0) rotate(1.2deg) scale(1.025); }
+  78% { transform: rotate(-0.5deg) scale(0.998); }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes philo-heart-in {
+  0% { opacity: 0; transform: translateY(12px) scale(0.8) rotate(var(--r1)); }
+  60% { opacity: 1; }
+  100% { opacity: 1; transform: rotate(var(--r1)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .philosophy-label, .philosophy-ch, .philosophy-dot, .philosophy-title .w, .philosophy-para,
+  .philosophy-receipt, .philosophy-heart, .philosophy-spark { opacity: 1; }
+  .philosophy.is-in .philosophy-label, .philosophy.is-in .philosophy-dot, .philosophy.is-in .philosophy-ch,
+  .philosophy.is-in .philosophy-title .w, .philosophy.is-in .philosophy-para, .philosophy.is-in .philosophy-receipt,
+  .philosophy.is-in .philosophy-heart, .philosophy.is-in .philosophy-spark { animation: none; }
+  .philosophy-btn-bg { transition: none; }
+}
+
