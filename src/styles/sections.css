@@ -1793,3 +1793,105 @@
   will-change: transform, opacity, filter;
 }
 
+.footer-doodle {
+  position: absolute;
+  left: 80px;
+  top: -16px;
+  width: 48px;
+  height: 37.984px;
+  background: var(--grass);
+  -webkit-mask-image: url('../assets/img/footer/doodle.svg');
+  mask-image: url('../assets/img/footer/doodle.svg');
+  -webkit-mask-size: auto;
+  mask-size: auto;
+  -webkit-mask-position: 50% 50%;
+  mask-position: 50% 50%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: 0;
+  transform: scale(0.8) rotate(30deg);
+  transform-origin: 50% 50%;
+  will-change: transform, opacity;
+}
+
+.footer-copy {
+  opacity: 0;
+  transform: translateY(24px);
+  will-change: transform, opacity;
+}
+.footer-copy p {
+  margin: 0;
+  font: 500 14px/20.16px Inter, sans-serif;
+  letter-spacing: -0.14px;
+  color: var(--ink);
+}
+
+.footer-menu-blocks {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(1px, 1fr));
+  gap: 16px;
+  align-items: start;
+}
+.footer-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  opacity: 0;
+  transform: translateY(24px) scale(0.8);
+  will-change: transform, opacity;
+}
+.footer-block-contact { padding-left: 16px; }
+
+.footer-label p {
+  margin: 0;
+  font: 400 16px/16.64px 'Gochi Hand', cursive;
+  color: rgba(40, 64, 16, 0.6);
+  white-space: pre-wrap;
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+.footer-link {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 4px 0;
+  text-decoration: none;
+}
+.footer-link-text {
+  margin: 0;
+  font: 400 24px/24px 'Londrina Solid', sans-serif;
+  letter-spacing: -0.24px;
+  color: var(--ink);
+  white-space: pre;
+}
+.footer-link:hover .footer-link-text { color: rgba(40, 64, 16, 0.6); }
+
+.footer-icon-wrap { display: flex; align-items: flex-start; padding: 2px 0; }
+.footer-icon {
+  display: block;
+  width: 18px;
+  height: 18px;
+  background: var(--ink);
+  -webkit-mask-size: auto;
+  mask-size: auto;
+  -webkit-mask-position: 50% 50%;
+  mask-position: 50% 50%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+.footer-icon-pin {
+  -webkit-mask-image: url('../assets/img/footer/pin.svg');
+  mask-image: url('../assets/img/footer/pin.svg');
+}
+.footer-icon-mail {
+  -webkit-mask-image: url('../assets/img/footer/mail.svg');
+  mask-image: url('../assets/img/footer/mail.svg');
+}
+.footer-link:hover .footer-icon { background: rgba(40, 64, 16, 0.6); }
+
