@@ -487,3 +487,27 @@
   font: 500 10px/14.4px Inter, sans-serif; letter-spacing: -0.1px; color: var(--ink); }
 
 /* Reveal (enter) animation — label, title words, cupid */
+.mood-label, .mood-ch, .mood-title .w, .mood-cupid { opacity: 0; }
+.mood.is-in .mood-label { animation: mood-label-in 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.mood.is-in .mood-ch { animation: mood-ch-in 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: calc(0.06s + var(--i) * 0.015s); }
+.mood.is-in .mood-title .w { animation: mood-word-in 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: calc(0.14s + var(--i) * 0.075s); }
+.mood.is-in .mood-cupid { animation: mood-cupid-in 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) 0.2s both; }
+
+@keyframes mood-label-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@keyframes mood-ch-in { from { opacity: 0.001; filter: blur(2px); transform: translateY(8px); } to { opacity: 1; filter: blur(0); transform: none; } }
+@keyframes mood-word-in {
+  0% { opacity: 0.001; filter: blur(3px); transform: translateY(32px) scale(0.8); }
+  40% { opacity: 1; filter: blur(0); transform: translateY(0) scale(1.03); }
+  72% { transform: translateY(0) scale(0.995); }
+  100% { opacity: 1; filter: blur(0); transform: none; }
+}
+@keyframes mood-cupid-in { from { opacity: 0; transform: translateY(24px) scale(0.8) rotate(-30deg); } to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .mood-label, .mood-ch, .mood-title .w, .mood-cupid { opacity: 1; }
+  .mood.is-in .mood-label, .mood.is-in .mood-ch, .mood.is-in .mood-title .w, .mood.is-in .mood-cupid { animation: none; }
+  .mood-card, .mood-sparkle { animation: none !important; }
+  .mood-pointer { transition: none; }
+}
+
