@@ -725,3 +725,15 @@
   .philosophy-btn-bg { transition: none; }
 }
 
+/* ---------- Philosophy — Tablet (768 – 1199.98px) ---------- */
+@media (min-width: 768px) and (max-width: 1199.98px) {
+  .philosophy-content { flex-direction: column; align-items: center; gap: 120px; }
+  .philosophy-info { flex: none; width: 100%; }
+  .philosophy-titlewrap { width: 408px; max-width: 408px; }
+  .philosophy-title { font-size: 68px; line-height: 68px; letter-spacing: -0.68px; }
+  .philosophy-heart-1 { left: -116px; top: 382.891px; }
+  .philosophy-heart-2 { left: -100px; top: 334.891px; }
+  .philosophy-heart-3 { left: -68px; top: 302.891px; }
+  .philosophy-spark { display: block; left: 392px; top: -48px; width: 48px; height: 80px; }
+}
+
