@@ -737,3 +737,28 @@
   .philosophy-spark { display: block; left: 392px; top: -48px; width: 48px; height: 80px; }
 }
 
+/* ---------- Philosophy — Mobile (≤ 767.98px) ---------- */
+@media (max-width: 767.98px) {
+  .philosophy { padding: 128px 32px; }
+  .philosophy-content { flex-direction: column; align-items: center; gap: 80px; }
+  .philosophy-info { flex: none; width: 100%; }
+  .philosophy-h2text { gap: 16px; }
+  .philosophy-label { gap: 10px; }
+  .philosophy-label p { font-size: 18px; line-height: 18.72px; }
+  .philosophy-titlewrap { width: 100%; max-width: 288px; }
+  .philosophy-title { font-size: 48px; line-height: 48px; letter-spacing: -0.48px; }
+  .philosophy-para-wrap { width: 100%; max-width: 360px; }
+  .philosophy-buttons { flex-direction: column; align-items: stretch; width: 100%; }
+  .philosophy-btn { width: 100%; }
+  .philosophy-receipt-wrap { width: 100%; }
+  .philosophy-receipt { width: 100%; padding: 40px 24px; }
+  .philosophy-logo-text { font-size: 40px; line-height: 40px; letter-spacing: -0.4px; }
+  .philosophy-bolt { width: 40px; height: 40px; }
+  .philosophy-total-value { font-size: 21px; line-height: 21px; letter-spacing: -0.21px; }
+  .philosophy-perf { left: calc(50% - 149px); right: auto; width: 293.9px; transform: none; }
+  /* source: 16 dots exactly fill the 293.9px band -> space-between reproduces its 2.8467px gaps */
+  .philosophy-perf-row { justify-content: space-between; gap: 0; }
+  .philosophy-perf-dot { width: 15.7px; height: 15.7px; }
+  .philosophy-heart, .philosophy-spark { display: none; }
+}
+
