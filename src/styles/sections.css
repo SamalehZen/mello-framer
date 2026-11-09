@@ -654,3 +654,28 @@
   -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; }
 .philosophy-thanks-text { padding-top: 2px; font: 400 16px/16.64px 'Gochi Hand', cursive; color: var(--ink); }
 
+/* match Framer's Inter OpenType features (must come after the font shorthands) */
+.philosophy, .philosophy * { font-feature-settings: 'blwf', 'cv03', 'cv04', 'cv09', 'cv11'; }
+
+/* perforated ticket edges */
+.philosophy-perf { position: absolute; left: -8px; right: -8px; height: 16px; display: flex; z-index: 1; }
+.philosophy-perf-top { top: -8px; }
+.philosophy-perf-bottom { bottom: -8px; }
+.philosophy-perf-row { display: flex; width: 100%; gap: 8px; }
+.philosophy-perf-dot { flex: none; width: 16px; height: 16px; border-radius: 100px; background: var(--ink); }
+
+/* floating hearts + tablet spark */
+.philosophy-heart { position: absolute; background: var(--grass); transform: rotate(var(--r1));
+  -webkit-mask-image: var(--philo-heart); mask-image: var(--philo-heart);
+  -webkit-mask-size: 100% 100%; mask-size: 100% 100%;
+  -webkit-mask-position: center; mask-position: center;
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; }
+.philosophy-heart-1 { --i: 0; --r1: -10deg; left: -160px; top: 334.891px; width: 80px; height: 80px; }
+.philosophy-heart-2 { --i: 1; --r1: 20deg; left: -208px; top: 326.891px; width: 40px; height: 40px; }
+.philosophy-heart-3 { --i: 2; --r1: -10deg; left: -160px; top: 302.891px; width: 24px; height: 24px; }
+.philosophy-spark { display: none; position: absolute; background: var(--grass); --r1: 10deg; transform: rotate(var(--r1));
+  -webkit-mask-image: var(--philo-spark); mask-image: var(--philo-spark);
+  -webkit-mask-size: 100% 100%; mask-size: 100% 100%;
+  -webkit-mask-position: center; mask-position: center;
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; }
+
