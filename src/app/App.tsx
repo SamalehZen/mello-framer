@@ -25,7 +25,7 @@ export default function App() {
           <InfoBar marquee={isMobile} />
           <Header />
         </div>
-        <Hero isMobile={isMobile} />
+        <Hero />
         <Ticker speed={50} />
         <Products />
         <Menu />

@@ -1,11 +1,25 @@
 import { Fragment, type CSSProperties } from 'react'
 import tallImg from '@/assets/img/visit/visit-tall.jpg'
 import tall768Img from '@/assets/img/visit/visit-tall-768.jpg'
+import tallAvif from '@/assets/img/visit/visit-tall.avif'
+import tall768Avif from '@/assets/img/visit/visit-tall-768.avif'
+import tallWebp from '@/assets/img/visit/visit-tall.webp'
+import tall768Webp from '@/assets/img/visit/visit-tall-768.webp'
 import sweetImg from '@/assets/img/visit/visit-sweet.jpg'
 import sweet512Img from '@/assets/img/visit/visit-sweet-512.jpg'
 import sweet1024Img from '@/assets/img/visit/visit-sweet-1024.jpg'
+import sweetAvif from '@/assets/img/visit/visit-sweet.avif'
+import sweet512Avif from '@/assets/img/visit/visit-sweet-512.avif'
+import sweet1024Avif from '@/assets/img/visit/visit-sweet-1024.avif'
+import sweetWebp from '@/assets/img/visit/visit-sweet.webp'
+import sweet512Webp from '@/assets/img/visit/visit-sweet-512.webp'
+import sweet1024Webp from '@/assets/img/visit/visit-sweet-1024.webp'
 import trioImg from '@/assets/img/visit/visit-trio.jpg'
 import trio768Img from '@/assets/img/visit/visit-trio-768.jpg'
+import trioAvif from '@/assets/img/visit/visit-trio.avif'
+import trio768Avif from '@/assets/img/visit/visit-trio-768.avif'
+import trioWebp from '@/assets/img/visit/visit-trio.webp'
+import trio768Webp from '@/assets/img/visit/visit-trio-768.webp'
 import { useReveal } from '@/hooks/useReveal'
 
 const LABEL_WORDS = ['See', 'you', 'soon']
@@ -81,14 +95,29 @@ export default function Visit() {
           <div className={'visit-pane visit-pane-a' + on} style={{ '--i': 0 } as CSSProperties}>
             <div className="visit-card visit-card-photo">
               <div className="visit-img-wrap">
-                <img
-                  className="visit-img"
-                  src={tallImg}
-                  srcSet={`${tall768Img} 768w, ${tallImg} 1200w`}
-                  sizes={SIZES_SPAN4}
-                  alt=""
-                  loading="lazy"
-                />
+                <picture>
+                  <source
+                    type="image/avif"
+                    srcSet={`${tall768Avif} 768w, ${tallAvif} 1200w`}
+                    sizes={SIZES_SPAN4}
+                  />
+                  <source
+                    type="image/webp"
+                    srcSet={`${tall768Webp} 768w, ${tallWebp} 1200w`}
+                    sizes={SIZES_SPAN4}
+                  />
+                  <img
+                    className="visit-img"
+                    src={tallImg}
+                    srcSet={`${tall768Img} 768w, ${tallImg} 1200w`}
+                    sizes={SIZES_SPAN4}
+                    alt=""
+                    width={1200}
+                    height={1600}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
               </div>
               <div className="visit-card-text">
                 <p className="visit-card-label">Cherry on top</p>
@@ -100,14 +129,29 @@ export default function Visit() {
             <div className={'visit-rv visit-rv-sweet' + on} style={{ '--i': 1 } as CSSProperties}>
               <div className="visit-card visit-card-photo">
                 <div className="visit-img-wrap">
-                  <img
-                    className="visit-img"
-                    src={sweetImg}
-                    srcSet={`${sweet512Img} 512w, ${sweet1024Img} 1024w, ${sweetImg} 1200w`}
-                    sizes={SIZES_SPAN5}
-                    alt="A couple enjoying coffee at a sunlit cafe table, with a barista working in the background."
-                    loading="lazy"
-                  />
+                  <picture>
+                    <source
+                      type="image/avif"
+                      srcSet={`${sweet512Avif} 512w, ${sweet1024Avif} 1024w, ${sweetAvif} 1200w`}
+                      sizes={SIZES_SPAN5}
+                    />
+                    <source
+                      type="image/webp"
+                      srcSet={`${sweet512Webp} 512w, ${sweet1024Webp} 1024w, ${sweetWebp} 1200w`}
+                      sizes={SIZES_SPAN5}
+                    />
+                    <img
+                      className="visit-img"
+                      src={sweetImg}
+                      srcSet={`${sweet512Img} 512w, ${sweet1024Img} 1024w, ${sweetImg} 1200w`}
+                      sizes={SIZES_SPAN5}
+                      alt="A couple enjoying coffee at a sunlit cafe table, with a barista working in the background."
+                      width={1200}
+                      height={900}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </picture>
                 </div>
                 <div className="visit-card-text">
                   <p className="visit-card-label">Sweet little moment</p>
@@ -167,14 +211,29 @@ export default function Visit() {
             <div className={'visit-rv visit-rv-trio' + on} style={{ '--i': 5 } as CSSProperties}>
               <div className="visit-card visit-card-photo">
                 <div className="visit-img-wrap">
-                  <img
-                    className="visit-img"
-                    src={trioImg}
-                    srcSet={`${trio768Img} 768w, ${trioImg} 1200w`}
-                    sizes={SIZES_SPAN3}
-                    alt=""
-                    loading="lazy"
-                  />
+                  <picture>
+                    <source
+                      type="image/avif"
+                      srcSet={`${trio768Avif} 768w, ${trioAvif} 1200w`}
+                      sizes={SIZES_SPAN3}
+                    />
+                    <source
+                      type="image/webp"
+                      srcSet={`${trio768Webp} 768w, ${trioWebp} 1200w`}
+                      sizes={SIZES_SPAN3}
+                    />
+                    <img
+                      className="visit-img"
+                      src={trioImg}
+                      srcSet={`${trio768Img} 768w, ${trioImg} 1200w`}
+                      sizes={SIZES_SPAN3}
+                      alt=""
+                      width={1200}
+                      height={1600}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </picture>
                 </div>
                 <div className="visit-card-text">
                   <p className="visit-card-label">The Mello trio</p>
