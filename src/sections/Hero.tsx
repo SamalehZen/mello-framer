@@ -9,6 +9,7 @@ import matcha512Webp from '@/assets/img/matcha-512.webp'
 import matcha1280Webp from '@/assets/img/matcha-1280.webp'
 import arrow from '@/assets/img/doodle-arrow.svg'
 import flower from '@/assets/img/doodle-flower.svg'
+import { SITE } from '@/config/site'
 
 const HERO_SIZES = '(max-width: 767.98px) 326px, 1072px'
 
@@ -42,12 +43,7 @@ export default function Hero() {
           <a className="btn btn-primary" href="#menu">
             <span>Explore the menu</span>
           </a>
-          <a
-            className="btn btn-secondary"
-            href="https://google.com/maps"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a className="btn btn-secondary" href={SITE.mapsUrl} target="_blank" rel="noreferrer">
             <span>Get directions</span>
           </a>
         </div>
