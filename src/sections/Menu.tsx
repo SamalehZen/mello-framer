@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState, type CSSProperties } from 'react'
+import { type CSSProperties } from 'react'
+import { useReveal } from '@/hooks/useReveal'
 
 type Category = {
   title: string[]
@@ -119,42 +120,31 @@ function CategoryBlock({ cat }: { cat: Category }) {
 }
 
 export default function Menu() {
-  const ref = useRef<HTMLElement | null>(null)
-  const [revealed, setRevealed] = useState(false)
-
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setRevealed(true)
-      return
-    }
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((e) => e.isIntersecting)) {
-          setRevealed(true)
-          io.disconnect()
-        }
-      },
-      { threshold: 0.2 },
-    )
-    io.observe(el)
-    return () => io.disconnect()
-  }, [])
+  const [ref, revealed] = useReveal<HTMLElement>({ threshold: 0.2 })
 
   return (
     <section className={`menu${revealed ? ' is-in' : ''}`} id="menu" ref={ref}>
       <div className="menu-content">
         <div className="menu-heading">
-          <span className="menu-heart-rv" aria-hidden="true"><span className="menu-heart" /></span>
+          <span className="menu-heart-rv" aria-hidden="true">
+            <span className="menu-heart" />
+          </span>
           <h2 className="menu-title">
             <span className="line">
-              <span className="w" style={{ '--i': 0 } as CSSProperties}>The</span>
-              <span className="w" style={{ '--i': 1 } as CSSProperties}>complete</span>
+              <span className="w" style={{ '--i': 0 } as CSSProperties}>
+                The
+              </span>
+              <span className="w" style={{ '--i': 1 } as CSSProperties}>
+                complete
+              </span>
             </span>
             <span className="line">
-              <span className="w" style={{ '--i': 2 } as CSSProperties}>Mello</span>
-              <span className="w" style={{ '--i': 3 } as CSSProperties}>menu</span>
+              <span className="w" style={{ '--i': 2 } as CSSProperties}>
+                Mello
+              </span>
+              <span className="w" style={{ '--i': 3 } as CSSProperties}>
+                menu
+              </span>
             </span>
           </h2>
         </div>

@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useRef, useState, type CSSProperties } from 'react'
+import { Fragment, type CSSProperties } from 'react'
 import tallImg from '@/assets/img/visit/visit-tall.jpg'
 import tall768Img from '@/assets/img/visit/visit-tall-768.jpg'
 import sweetImg from '@/assets/img/visit/visit-sweet.jpg'
@@ -6,6 +6,7 @@ import sweet512Img from '@/assets/img/visit/visit-sweet-512.jpg'
 import sweet1024Img from '@/assets/img/visit/visit-sweet-1024.jpg'
 import trioImg from '@/assets/img/visit/visit-trio.jpg'
 import trio768Img from '@/assets/img/visit/visit-trio-768.jpg'
+import { useReveal } from '@/hooks/useReveal'
 
 const LABEL_WORDS = ['See', 'you', 'soon']
 const TITLE_WORDS = ['Take', 'a', 'peek.', 'Come', 'on', 'over']
@@ -17,31 +18,6 @@ const SIZES_SPAN5 =
   '(min-width: 1200px) calc(calc(max((min(100vw - 128px, 1200px) - 176px) / 12, 1px) * 5 + 64px) - 24px), (min-width: 768px) and (max-width: 1199.98px) calc(max((max((min(100vw - 128px, 1200px) - 16px) / 2, 1px) * 2 - 0px) / 2, 1px) - 24px), (max-width: 767.98px) calc(min(100vw - 64px, 1200px) - 16px)'
 const SIZES_SPAN3 =
   '(min-width: 1200px) calc(calc(max((min(100vw - 128px, 1200px) - 176px) / 12, 1px) * 3 + 32px) - 24px), (min-width: 768px) and (max-width: 1199.98px) calc(max((min(100vw - 128px, 1200px) - 16px) / 2, 1px) - 24px), (max-width: 767.98px) calc(min(100vw - 64px, 1200px) - 16px)'
-
-function useReveal<T extends HTMLElement>() {
-  const ref = useRef<T | null>(null)
-  const [shown, setShown] = useState(false)
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setShown(true)
-      return
-    }
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((e) => e.isIntersecting)) {
-          setShown(true)
-          io.disconnect()
-        }
-      },
-      { threshold: 0, rootMargin: '0px' },
-    )
-    io.observe(el)
-    return () => io.disconnect()
-  }, [])
-  return [ref, shown] as const
-}
 
 function LabelChars() {
   let i = 0
@@ -140,8 +116,16 @@ export default function Visit() {
             </div>
 
             <div className="visit-contact-items">
-              <div className={'visit-rv visit-rv-contact' + on} style={{ '--i': 3 } as CSSProperties}>
-                <a className="visit-contact visit-contact-address" href="https://google.com/maps" target="_blank" rel="noreferrer">
+              <div
+                className={'visit-rv visit-rv-contact' + on}
+                style={{ '--i': 3 } as CSSProperties}
+              >
+                <a
+                  className="visit-contact visit-contact-address"
+                  href="https://google.com/maps"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   <div className="visit-contact-info">
                     <div className="visit-contact-label">
                       <p>Mello’s here</p>

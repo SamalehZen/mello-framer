@@ -1,4 +1,5 @@
-import { Fragment, useEffect, useRef, useState, type CSSProperties } from 'react'
+import { Fragment, useRef, type CSSProperties } from 'react'
+import { useReveal } from '@/hooks/useReveal'
 import barcode from '@/assets/img/philosophy/philo-barcode.svg'
 import boltSvg from '@/assets/img/philosophy/philo-bolt.svg?raw'
 import heartSvg from '@/assets/img/philosophy/philo-heart.svg?raw'
@@ -53,32 +54,16 @@ function Perforation() {
 }
 
 export default function Philosophy() {
-  const [revealed, setRevealed] = useState(false)
   const sectionRef = useRef<HTMLElement | null>(null)
-  const headingRef = useRef<HTMLDivElement | null>(null)
-
-  useEffect(() => {
-    const el = headingRef.current
-    if (!el) return
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setRevealed(true)
-      return
-    }
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((e) => e.isIntersecting)) {
-          setRevealed(true)
-          io.disconnect()
-        }
-      },
-      { threshold: 0, rootMargin: '0px' },
-    )
-    io.observe(el)
-    return () => io.disconnect()
-  }, [])
+  const [headingRef, revealed] = useReveal<HTMLDivElement>()
 
   return (
-    <section className={`philosophy${revealed ? ' is-in' : ''}`} id="philosophy" ref={sectionRef} style={MASK_VARS}>
+    <section
+      className={`philosophy${revealed ? ' is-in' : ''}`}
+      id="philosophy"
+      ref={sectionRef}
+      style={MASK_VARS}
+    >
       <div className="philosophy-content">
         <div className="philosophy-info">
           <div className="philosophy-h2text">

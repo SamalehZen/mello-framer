@@ -1,32 +1,8 @@
-import { Fragment, useEffect, useRef, useState, type CSSProperties } from 'react'
+import { Fragment, type CSSProperties } from 'react'
+import { useReveal } from '@/hooks/useReveal'
 
 const LOGO = ['M', 'e', 'l', 'l', 'o']
 const HOURS = ['Open', 'daily', '7AM–6PM']
-
-function useReveal<T extends HTMLElement>() {
-  const ref = useRef<T | null>(null)
-  const [shown, setShown] = useState(false)
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setShown(true)
-      return
-    }
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((e) => e.isIntersecting)) {
-          setShown(true)
-          io.disconnect()
-        }
-      },
-      { threshold: 0.5, rootMargin: '0px' },
-    )
-    io.observe(el)
-    return () => io.disconnect()
-  }, [])
-  return [ref, shown] as const
-}
 
 function HoursChars() {
   let i = 0
@@ -75,7 +51,7 @@ const FOLLOW_LINKS = [
 ]
 
 export default function Footer() {
-  const [ref, shown] = useReveal<HTMLElement>()
+  const [ref, shown] = useReveal<HTMLElement>({ threshold: 0.5 })
   const on = shown ? ' is-in' : ''
 
   return (
@@ -126,7 +102,13 @@ export default function Footer() {
               </div>
               <div className="footer-links">
                 {FOLLOW_LINKS.map((l) => (
-                  <a className="footer-link" href={l.href} target="_blank" rel="noreferrer" key={l.label}>
+                  <a
+                    className="footer-link"
+                    href={l.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    key={l.label}
+                  >
                     <p className="footer-link-text">{l.label}</p>
                   </a>
                 ))}
@@ -139,7 +121,12 @@ export default function Footer() {
               <p>Contact</p>
             </div>
             <div className="footer-links">
-              <a className="footer-link" href="https://google.com/maps" target="_blank" rel="noreferrer">
+              <a
+                className="footer-link"
+                href="https://google.com/maps"
+                target="_blank"
+                rel="noreferrer"
+              >
                 <span className="footer-icon-wrap">
                   <span className="footer-icon footer-icon-pin" aria-hidden="true" />
                 </span>
