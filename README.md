@@ -40,21 +40,21 @@ reference design down to the pixel.
 
 ## 🧩 Sections
 
-| Section | What it does |
-|---|---|
-| **Info bar** | Scrolling address / hours strip (static on desktop, marquee on mobile) |
-| **Header** | Logo + nav with animated hover pills |
-| **Hero** | Staggered headline, CTAs, matcha artwork, doodles & product badge |
-| **Ticker** | Infinite CSS marquee with heart separators (×3) |
-| **Products** | Four-up product grid with scroll-reveal cards |
-| **Menu** | Full menu — six categories with prices and volumes |
-| **Mood** | Interactive flavour wheel that swaps a detail card |
-| **Time** | Opening-hours card with switchable day tabs |
-| **Philosophy** | Perforated “receipt” ticket with floating hearts & barcode |
-| **Atmosphere** | Photo explorer with clickable hotspots and 5s autoplay |
-| **Testimonials** | Autoplaying carousel with spring-eased card transitions |
-| **Visit** | Address, hours and photo panes with staggered reveal |
-| **Footer** | Links, contact icons and an animated logo |
+| Section          | What it does                                                           |
+| ---------------- | ---------------------------------------------------------------------- |
+| **Info bar**     | Scrolling address / hours strip (static on desktop, marquee on mobile) |
+| **Header**       | Logo + nav with animated hover pills                                   |
+| **Hero**         | Staggered headline, CTAs, matcha artwork, doodles & product badge      |
+| **Ticker**       | Infinite CSS marquee with heart separators (×3)                        |
+| **Products**     | Four-up product grid with scroll-reveal cards                          |
+| **Menu**         | Full menu — six categories with prices and volumes                     |
+| **Mood**         | Interactive flavour wheel that swaps a detail card                     |
+| **Time**         | Opening-hours card with switchable day tabs                            |
+| **Philosophy**   | Perforated “receipt” ticket with floating hearts & barcode             |
+| **Atmosphere**   | Photo explorer with clickable hotspots and 5s autoplay                 |
+| **Testimonials** | Autoplaying carousel with spring-eased card transitions                |
+| **Visit**        | Address, hours and photo panes with staggered reveal                   |
+| **Footer**       | Links, contact icons and an animated logo                              |
 
 ---
 
@@ -107,13 +107,13 @@ than blanket-scaled, so each viewport is genuinely first-class.
 
 ## 🛠 Tech stack
 
-| Layer | Choice |
-|---|---|
-| Build | **Vite 7** |
-| UI | **React 19** + **TypeScript 5.9** (strict) |
-| Styling | Hand-written CSS + **Tailwind CSS 3** for design tokens |
-| Fonts | Self-hosted **Londrina Solid**, **Gochi Hand**, **Inter** |
-| Motion | CSS keyframes, `linear()` springs, `IntersectionObserver` |
+| Layer   | Choice                                                    |
+| ------- | --------------------------------------------------------- |
+| Build   | **Vite 7**                                                |
+| UI      | **React 19** + **TypeScript 5.9** (strict)                |
+| Styling | Hand-written CSS + **Tailwind CSS 3** for design tokens   |
+| Fonts   | Self-hosted **Londrina Solid**, **Gochi Hand**, **Inter** |
+| Motion  | CSS keyframes, `linear()` springs, `IntersectionObserver` |
 
 ---
 

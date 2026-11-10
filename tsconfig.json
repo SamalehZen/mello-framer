@@ -4,16 +4,28 @@
     "useDefineForClassFields": true,
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "module": "ESNext",
+    "moduleDetection": "force",
     "skipLibCheck": true,
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "erasableSyntaxOnly": true,
     "noEmit": true,
     "jsx": "react-jsx",
+    "types": ["vite/client", "node"],
+
     "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noImplicitOverride": true,
+    "forceConsistentCasingInFileNames": true,
+
     "baseUrl": ".",
     "paths": { "@/*": ["src/*"] }
   },
-  "include": ["src"]
+  "include": ["src", "e2e", "vitest.config.ts"]
 }
