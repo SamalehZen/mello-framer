@@ -9,6 +9,12 @@ dist-mello/
 # TypeScript incremental build info
 *.tsbuildinfo
 
+# Test output / reports
+coverage/
+playwright-report/
+test-results/
+blob-report/
+
 # Environment / secrets (never commit these)
 .env
 .env.*
