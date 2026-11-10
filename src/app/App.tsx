@@ -20,7 +20,7 @@ export default function App() {
       <a className="skip-link" href="#main-content">
         Skip to content
       </a>
-      <main id="main-content">
+      <main id="main-content" tabIndex={-1}>
         <div className="top-stack" id="top">
           <InfoBar marquee={isMobile} />
           <Header />
