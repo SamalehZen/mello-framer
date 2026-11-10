@@ -82,6 +82,11 @@ body {
   }
 }
 
+/* The skip link moves focus here; the outline would only add noise. */
+#main-content:focus {
+  outline: none;
+}
+
 /* Rendered by the top-level error boundary instead of the page. */
 .error-fallback {
   display: flex;
