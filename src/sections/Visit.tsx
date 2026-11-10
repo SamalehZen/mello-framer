@@ -21,6 +21,7 @@ import trio768Avif from '@/assets/img/visit/visit-trio-768.avif'
 import trioWebp from '@/assets/img/visit/visit-trio.webp'
 import trio768Webp from '@/assets/img/visit/visit-trio-768.webp'
 import { useReveal } from '@/hooks/useReveal'
+import { SITE } from '@/config/site'
 
 const LABEL_WORDS = ['See', 'you', 'soon']
 const TITLE_WORDS = ['Take', 'a', 'peek.', 'Come', 'on', 'over']
@@ -166,7 +167,7 @@ export default function Visit() {
               >
                 <a
                   className="visit-contact visit-contact-address"
-                  href="https://google.com/maps"
+                  href={SITE.mapsUrl}
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -175,7 +176,7 @@ export default function Visit() {
                       <p>Mello’s here</p>
                     </div>
                     <div className="visit-address">
-                      <h3>28 Roastery Lane, Brooklyn, NY</h3>
+                      <h3>{SITE.address.full}</h3>
                     </div>
                   </div>
                   <div className="visit-mark visit-mark-pin" aria-hidden="true" />
@@ -183,7 +184,7 @@ export default function Visit() {
               </div>
 
               <div className={'visit-rv visit-rv-hello' + on} style={{ '--i': 4 } as CSSProperties}>
-                <a className="visit-contact visit-contact-hello" href="mailto: hi@mello.com">
+                <a className="visit-contact visit-contact-hello" href={`mailto:${SITE.email}`}>
                   <h3 className="visit-hello-text">Say hello!</h3>
                   <div className="visit-mark visit-mark-flower" aria-hidden="true" />
                 </a>

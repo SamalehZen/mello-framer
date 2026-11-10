@@ -1,9 +1,10 @@
 import { Fragment } from 'react'
 import Marquee from '@/components/Marquee'
+import { SITE } from '@/config/site'
 
 const ITEMS = [
-  '28 Roastery Lane, Brooklyn',
-  'Open daily 7AM–6PM',
+  `${SITE.address.street}, ${SITE.address.city}`,
+  SITE.hours,
   'Coffee, matcha & fresh bakes daily',
 ]
 

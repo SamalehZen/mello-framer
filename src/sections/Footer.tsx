@@ -1,5 +1,6 @@
 import { Fragment, type CSSProperties } from 'react'
 import { useReveal } from '@/hooks/useReveal'
+import { SITE } from '@/config/site'
 
 const LOGO = ['M', 'e', 'l', 'l', 'o']
 const HOURS = ['Open', 'daily', '7AM–6PM']
@@ -44,11 +45,7 @@ const EXPLORE_LINKS = [
   { label: 'Place', href: '#place' },
   { label: 'Visit', href: '#visit' },
 ]
-const FOLLOW_LINKS = [
-  { label: 'TikTok', href: 'https://tiktok.com' },
-  { label: 'Instagram', href: 'https://Instagram.com' },
-  { label: 'Facebook', href: 'https://Facebook.com' },
-]
+const FOLLOW_LINKS = SITE.social
 
 export default function Footer() {
   const [ref, shown] = useReveal<HTMLElement>({ threshold: 0.5 })
@@ -121,22 +118,19 @@ export default function Footer() {
               <p>Contact</p>
             </div>
             <div className="footer-links">
-              <a
-                className="footer-link"
-                href="https://google.com/maps"
-                target="_blank"
-                rel="noreferrer"
-              >
+              <a className="footer-link" href={SITE.mapsUrl} target="_blank" rel="noreferrer">
                 <span className="footer-icon-wrap">
                   <span className="footer-icon footer-icon-pin" aria-hidden="true" />
                 </span>
-                <p className="footer-link-text">{'28 Roastery Lane,\nBrooklyn, NY'}</p>
+                <p className="footer-link-text">
+                  {`${SITE.address.street},\n${SITE.address.city}, ${SITE.address.region}`}
+                </p>
               </a>
-              <a className="footer-link" href="mailto: hi@mello.com">
+              <a className="footer-link" href={`mailto:${SITE.email}`}>
                 <span className="footer-icon-wrap">
                   <span className="footer-icon footer-icon-mail" aria-hidden="true" />
                 </span>
-                <p className="footer-link-text">hi@mello.com</p>
+                <p className="footer-link-text">{SITE.email}</p>
               </a>
             </div>
           </div>
