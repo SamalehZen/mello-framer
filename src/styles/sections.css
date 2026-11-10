@@ -997,7 +997,7 @@
     sans-serif;
 }
 .pcard-accent .card-chip {
-  background: rgba(40, 64, 16, 0.16);
+  background: rgba(40, 64, 16, 0.08);
 }
 .pcard-accent .card-title,
 .pcard-black .card-title {
@@ -1445,7 +1445,7 @@
     500 14px/20.16px Inter,
     sans-serif;
   letter-spacing: -0.14px;
-  color: rgba(40, 64, 16, 0.6);
+  color: rgba(40, 64, 16, 0.75);
 }
 .menu-items {
   display: flex;
@@ -1701,7 +1701,7 @@
   width: calc(50% - 1.5px);
   height: calc(50% - 1.5px);
   background: var(--cream);
-  color: rgba(40, 64, 16, 0.6);
+  color: rgba(40, 64, 16, 0.75);
 }
 .mood-quad.is-active {
   background: var(--grass);
@@ -3276,7 +3276,7 @@
   text-align: left;
   cursor: pointer;
   background: var(--cream);
-  color: rgba(40, 64, 16, 0.6);
+  color: rgba(40, 64, 16, 0.75);
   font: inherit;
 }
 .time-tab.is-active {
@@ -4151,7 +4151,7 @@
   font:
     400 16px/16.64px 'Gochi Hand',
     cursive;
-  color: rgba(40, 64, 16, 0.6);
+  color: var(--ink);
   opacity: 1;
   transform: none;
 }
@@ -4279,7 +4279,7 @@
   font:
     400 16px/16.64px 'Gochi Hand',
     cursive;
-  color: rgba(40, 64, 16, 0.6);
+  color: var(--ink);
   transition: color 0.3s ease;
   white-space: nowrap;
 }
@@ -4290,7 +4290,7 @@
     400 24px/24px 'Londrina Solid',
     sans-serif;
   letter-spacing: -0.24px;
-  color: rgba(40, 64, 16, 0.6);
+  color: var(--ink);
   transition: color 0.3s ease;
 }
 .atmo-tab:hover,
@@ -6368,7 +6368,7 @@
   will-change: transform, opacity, filter;
 }
 .footer-logo:hover p {
-  color: rgba(40, 64, 16, 0.6);
+  color: rgba(40, 64, 16, 0.75);
 }
 
 .footer-hours {
@@ -6453,7 +6453,7 @@
   font:
     400 16px/16.64px 'Gochi Hand',
     cursive;
-  color: rgba(40, 64, 16, 0.6);
+  color: rgba(40, 64, 16, 0.75);
   white-space: pre-wrap;
 }
 
@@ -6480,7 +6480,7 @@
   white-space: pre;
 }
 .footer-link:hover .footer-link-text {
-  color: rgba(40, 64, 16, 0.6);
+  color: rgba(40, 64, 16, 0.75);
 }
 
 .footer-icon-wrap {
@@ -6509,7 +6509,7 @@
   mask-image: url('../assets/img/footer/mail.svg');
 }
 .footer-link:hover .footer-icon {
-  background: rgba(40, 64, 16, 0.6);
+  background: rgba(40, 64, 16, 0.75);
 }
 
 .footer.is-in .footer-block {
