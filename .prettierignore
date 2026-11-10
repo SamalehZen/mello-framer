@@ -1,0 +1,18 @@
+# Build output
+dist
+dist-mello
+coverage
+
+# Reporters / caches
+playwright-report
+test-results
+node_modules
+
+# Generated / lockfiles
+package-lock.json
+tsconfig.tsbuildinfo
+
+# Binary assets
+docs/screenshots
+public
+src/assets
