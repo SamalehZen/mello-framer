@@ -17,7 +17,10 @@ function mockMatchMedia(initial: boolean) {
     dispatchEvent: () => false,
   }
 
-  vi.stubGlobal('matchMedia', vi.fn(() => mql as unknown as MediaQueryList))
+  vi.stubGlobal(
+    'matchMedia',
+    vi.fn(() => mql as unknown as MediaQueryList),
+  )
 
   return {
     emit(next: boolean) {
