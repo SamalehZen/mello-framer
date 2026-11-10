@@ -183,6 +183,10 @@ export default function Mood() {
                   srcSet={`${mood.img} 512w, ${mood.img2x} 1024w`}
                   sizes="(min-width: 1200px) 323px, (min-width: 768px) 376px, 310px"
                   alt={mood.name}
+                  width={512}
+                  height={384}
+                  loading="lazy"
+                  decoding="async"
                   draggable="false"
                 />
               </div>

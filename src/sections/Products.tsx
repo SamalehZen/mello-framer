@@ -1,13 +1,19 @@
 import { type CSSProperties } from 'react'
 import strawberry from '@/assets/img/product-strawberry.jpg'
+import strawberryAvif from '@/assets/img/product-strawberry.avif'
+import strawberryWebp from '@/assets/img/product-strawberry.webp'
 import cherry from '@/assets/img/product-cherry.jpg'
+import cherryAvif from '@/assets/img/product-cherry.avif'
+import cherryWebp from '@/assets/img/product-cherry.webp'
 import cup from '@/assets/img/illus-cup.svg'
 import cinnamon from '@/assets/img/illus-cinnamon.svg'
 import { useReveal } from '@/hooks/useReveal'
 
+type Photo = { src: string; avif: string; webp: string; width: number; height: number }
+
 type Card = {
   kind: 'photo' | 'accent' | 'black'
-  photo?: string
+  photo?: Photo
   illo?: string
   note?: string
   badge?: string
@@ -20,7 +26,7 @@ type Card = {
 
 const TALL: Card = {
   kind: 'photo',
-  photo: strawberry,
+  photo: { src: strawberry, avif: strawberryAvif, webp: strawberryWebp, width: 528, height: 528 },
   badge: 'Favorite',
   details: ['Matcha', 'Strawberry'],
   title: 'Strawberry matcha',
@@ -30,7 +36,7 @@ const TALL: Card = {
 }
 const WIDE: Card = {
   kind: 'photo',
-  photo: cherry,
+  photo: { src: cherry, avif: cherryAvif, webp: cherryWebp, width: 528, height: 297 },
   details: ['Cocoa', 'Dark cherry'],
   title: 'Cherry cloud mocha',
   desc: 'Rich mocha with silky cherry cream.',
@@ -85,7 +91,21 @@ function CardBody({ card }: { card: Card }) {
 function Card({ card, index }: { card: Card; index: number }) {
   return (
     <article className={`pcard pcard-${card.kind}`} style={{ '--ci': index } as CSSProperties}>
-      {card.photo ? <img className="pcard-img" src={card.photo} alt="" /> : null}
+      {card.photo ? (
+        <picture>
+          <source type="image/avif" srcSet={card.photo.avif} />
+          <source type="image/webp" srcSet={card.photo.webp} />
+          <img
+            className="pcard-img"
+            src={card.photo.src}
+            alt=""
+            width={card.photo.width}
+            height={card.photo.height}
+            loading="lazy"
+            decoding="async"
+          />
+        </picture>
+      ) : null}
       {card.photo ? <span className="pcard-veil" aria-hidden="true" /> : null}
       {card.badge ? <span className="pcard-badge">{card.badge}</span> : null}
       {card.illo ? (

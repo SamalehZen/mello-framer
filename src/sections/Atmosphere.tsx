@@ -269,6 +269,10 @@ export default function Atmosphere() {
                 srcSet={`${spotImg} 1024w`}
                 sizes="(min-width: 1200px) calc(max(min(100vw - 128px, 1200px) / 3, 1px) * 2 + 110px), (min-width: 768px) and (max-width: 1199.98px) calc(min(100vw - 128px, 1200px) + 110px), (max-width: 767.98px) calc(min(100vw - 64px, 1200px) + 50px)"
                 alt="Inside the Mello coffee shop"
+                width={1024}
+                height={640}
+                loading="lazy"
+                decoding="async"
                 draggable={false}
               />
             </div>

@@ -3,10 +3,16 @@ import crown from '@/assets/img/doodle-crown.svg'
 import sun from '@/assets/img/doodle-sun.svg'
 import matcha512 from '@/assets/img/matcha-512.png'
 import matcha1280 from '@/assets/img/matcha-1280.png'
+import matcha512Avif from '@/assets/img/matcha-512.avif'
+import matcha1280Avif from '@/assets/img/matcha-1280.avif'
+import matcha512Webp from '@/assets/img/matcha-512.webp'
+import matcha1280Webp from '@/assets/img/matcha-1280.webp'
 import arrow from '@/assets/img/doodle-arrow.svg'
 import flower from '@/assets/img/doodle-flower.svg'
 
-export default function Hero({ isMobile = false }: { isMobile?: boolean }) {
+const HERO_SIZES = '(max-width: 767.98px) 326px, 1072px'
+
+export default function Hero() {
   return (
     <section className="hero">
       <div className="hero-content">
@@ -47,15 +53,30 @@ export default function Hero({ isMobile = false }: { isMobile?: boolean }) {
         </div>
 
         <div className="hero-media">
-          {isMobile ? null : null}
-          <img
-            className="hero-img"
-            src={matcha1280}
-            srcSet={`${matcha512} 512w, ${matcha1280} 1280w`}
-            sizes="(max-width: 767.98px) 326px, 1072px"
-            alt=""
-            draggable="false"
-          />
+          <picture>
+            <source
+              type="image/avif"
+              srcSet={`${matcha512Avif} 512w, ${matcha1280Avif} 1280w`}
+              sizes={HERO_SIZES}
+            />
+            <source
+              type="image/webp"
+              srcSet={`${matcha512Webp} 512w, ${matcha1280Webp} 1280w`}
+              sizes={HERO_SIZES}
+            />
+            <img
+              className="hero-img"
+              src={matcha1280}
+              srcSet={`${matcha512} 512w, ${matcha1280} 1280w`}
+              sizes={HERO_SIZES}
+              alt=""
+              width={1280}
+              height={960}
+              fetchPriority="high"
+              decoding="async"
+              draggable="false"
+            />
+          </picture>
           <div className="hero-note">
             <span className="note-bar" aria-hidden="true" />
             <div>
