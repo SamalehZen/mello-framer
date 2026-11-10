@@ -25,7 +25,11 @@ describe('Marquee', () => {
       </Marquee>,
     )
 
-    expect(container.querySelectorAll('.marquee-track > span')).toHaveLength(2)
+    expect(container.querySelectorAll('.marquee-track span')).toHaveLength(2)
+    // The duplicate copy is hidden from assistive tech.
+    const clone = container.querySelector('.marquee-clone')
+    expect(clone).toHaveAttribute('aria-hidden', 'true')
+    expect(clone!.querySelectorAll('span')).toHaveLength(1)
   })
 
   it('merges an optional class name', () => {

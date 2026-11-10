@@ -16,24 +16,29 @@ import { useMediaQuery } from '@/hooks/useMediaQuery'
 export default function App() {
   const isMobile = useMediaQuery('(max-width: 767.98px)')
   return (
-    <main>
-      <div className="top-stack" id="top">
-        <InfoBar marquee={isMobile} />
-        <Header />
-      </div>
-      <Hero isMobile={isMobile} />
-      <Ticker speed={50} />
-      <Products />
-      <Menu />
-      <Ticker speed={50} />
-      <Mood />
-      <Time />
-      <Philosophy />
-      <Ticker speed={50} />
-      <Atmosphere />
-      <Testimonials />
-      <Visit />
-      <Footer />
-    </main>
+    <>
+      <a className="skip-link" href="#main-content">
+        Skip to content
+      </a>
+      <main id="main-content">
+        <div className="top-stack" id="top">
+          <InfoBar marquee={isMobile} />
+          <Header />
+        </div>
+        <Hero isMobile={isMobile} />
+        <Ticker speed={50} />
+        <Products />
+        <Menu />
+        <Ticker speed={50} />
+        <Mood />
+        <Time />
+        <Philosophy />
+        <Ticker speed={50} />
+        <Atmosphere />
+        <Testimonials />
+        <Visit />
+        <Footer />
+      </main>
+    </>
   )
 }
