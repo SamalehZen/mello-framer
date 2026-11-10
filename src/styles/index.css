@@ -27,10 +27,6 @@
   font-display: swap;
 }
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 /* Measured tokens */
 :root {
   --cream: #e9ebdf;
