@@ -24,7 +24,7 @@ Same layout, same typography, same motion — across desktop, tablet and mobile.
 ## ✨ Overview
 
 Mello is a fast, accessible marketing site for a Brooklyn coffee shop. It ships
-as a single-page React app with ten distinct sections, a CSS-driven marquee and
+as a single-page React app with a dozen distinct sections, a CSS-driven marquee and
 a full set of responsive, motion-rich interactions — all built to match the
 reference design down to the pixel.
 
