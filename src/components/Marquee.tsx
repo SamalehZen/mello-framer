@@ -37,7 +37,9 @@ export default function Marquee({
     <div className={`marquee${className ? ' ' + className : ''}`}>
       <div className="marquee-track" ref={track}>
         {children}
-        {children}
+        <div className="marquee-clone" aria-hidden="true">
+          {children}
+        </div>
       </div>
     </div>
   )
