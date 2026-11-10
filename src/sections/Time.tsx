@@ -1,4 +1,5 @@
-import { Fragment, useEffect, useRef, useState, type CSSProperties } from 'react'
+import { Fragment, useState, type CSSProperties } from 'react'
+import { useReveal } from '@/hooks/useReveal'
 
 type TimeTab = {
   time: string
@@ -65,31 +66,10 @@ function Chars({ text, offset = 0 }: { text: string; offset?: number }) {
 
 export default function Time() {
   const [active, setActive] = useState(0)
-  const [revealed, setRevealed] = useState(false)
   const [switched, setSwitched] = useState(false)
-  const ref = useRef<HTMLElement | null>(null)
+  const [ref, revealed] = useReveal<HTMLElement>({ threshold: 0.12 })
   const tab = TABS[active]
   const [hh, mm] = tab.time.split(':')
-
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setRevealed(true)
-      return
-    }
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((e) => e.isIntersecting)) {
-          setRevealed(true)
-          io.disconnect()
-        }
-      },
-      { threshold: 0.12 },
-    )
-    io.observe(el)
-    return () => io.disconnect()
-  }, [])
 
   return (
     <section className={`time${revealed ? ' is-in' : ''}`} id="time" ref={ref}>
@@ -104,8 +84,7 @@ export default function Time() {
               <p className="time-label-text">
                 <span className="time-word">
                   <Chars text="Coffee" />
-                </span>
-                {' '}
+                </span>{' '}
                 <span className="time-word">
                   <Chars text="o’clock" offset={7} />
                 </span>
@@ -115,14 +94,18 @@ export default function Time() {
               {TITLE.map((w, i) => (
                 <Fragment key={w + i}>
                   {i > 0 ? ' ' : null}
-                  <span className="time-word" style={{ '--i': i } as CSSProperties}>{w}</span>
+                  <span className="time-word" style={{ '--i': i } as CSSProperties}>
+                    {w}
+                  </span>
                 </Fragment>
               ))}
             </h2>
           </div>
 
           <div className="time-heading-right">
-            <p className="time-sub">{'Start bright, slow down, or\u00A0treat yourself whenever.'}</p>
+            <p className="time-sub">
+              {'Start bright, slow down, or\u00A0treat yourself whenever.'}
+            </p>
           </div>
         </div>
 
@@ -160,14 +143,20 @@ export default function Time() {
                   role="tab"
                   aria-selected={i === active}
                   className={`time-tab${i === active ? ' is-active' : ''}`}
-                  onClick={() => { setActive(i); setSwitched(true) }}
+                  onClick={() => {
+                    setActive(i)
+                    setSwitched(true)
+                  }}
                   key={t.time}
                 >
                   <span className="time-tab-text">
                     <span className="time-tab-time">{t.time}</span>
                     <span className="time-tab-name">{t.name}</span>
                   </span>
-                  <span className={`time-tab-icon time-icon time-icon-${t.icon}`} aria-hidden="true" />
+                  <span
+                    className={`time-tab-icon time-icon time-icon-${t.icon}`}
+                    aria-hidden="true"
+                  />
                 </button>
               ))}
             </div>

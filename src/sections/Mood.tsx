@@ -6,7 +6,8 @@ import mocha from '@/assets/img/mood/mocha-512.avif'
 import mocha2x from '@/assets/img/mood/mocha-1024.avif'
 import citrus from '@/assets/img/mood/citrus-512.avif'
 import citrus2x from '@/assets/img/mood/citrus-1024.avif'
-import { Fragment, useEffect, useRef, useState, type CSSProperties } from 'react'
+import { Fragment, useState, type CSSProperties } from 'react'
+import { useReveal } from '@/hooks/useReveal'
 
 type Mood = {
   key: string
@@ -24,10 +25,62 @@ type Mood = {
 }
 
 const MOODS: Mood[] = [
-  { key: 'energized', label: 'Energized', title: 'Need a boost', details: ['Coffee', 'Ice'], name: 'Cold brew', desc: 'Bold and refreshingly cold.', price: '$4.50', volume: '8 oz', img: coldbrew, img2x: coldbrew2x, angle: -135, pos: 'tl' },
-  { key: 'cozy', label: 'Cozy', title: 'Take it slow', details: ['Espresso', 'Vanilla'], name: 'Vanilla latte', desc: 'Creamy and softly balanced.', price: '$6.25', volume: '16 oz', img: espresso, img2x: espresso2x, angle: -45, pos: 'tr' },
-  { key: 'refreshed', label: 'Refreshed', title: 'Keep it fresh', details: ['Mocha', 'Cream'], name: 'Mocha shake', desc: 'Rich, creamy, and chocolatey.', price: '$6.75', volume: '16 oz', img: mocha, img2x: mocha2x, angle: -225, pos: 'bl' },
-  { key: 'indulgent', label: 'Indulgent', title: 'Treat myself', details: ['Citrus', 'Soda'], name: 'Sparkling citrus', desc: 'Bright, bubbly, and refreshing.', price: '$5.25', volume: '16 oz', img: citrus, img2x: citrus2x, angle: 45, pos: 'br' },
+  {
+    key: 'energized',
+    label: 'Energized',
+    title: 'Need a boost',
+    details: ['Coffee', 'Ice'],
+    name: 'Cold brew',
+    desc: 'Bold and refreshingly cold.',
+    price: '$4.50',
+    volume: '8 oz',
+    img: coldbrew,
+    img2x: coldbrew2x,
+    angle: -135,
+    pos: 'tl',
+  },
+  {
+    key: 'cozy',
+    label: 'Cozy',
+    title: 'Take it slow',
+    details: ['Espresso', 'Vanilla'],
+    name: 'Vanilla latte',
+    desc: 'Creamy and softly balanced.',
+    price: '$6.25',
+    volume: '16 oz',
+    img: espresso,
+    img2x: espresso2x,
+    angle: -45,
+    pos: 'tr',
+  },
+  {
+    key: 'refreshed',
+    label: 'Refreshed',
+    title: 'Keep it fresh',
+    details: ['Mocha', 'Cream'],
+    name: 'Mocha shake',
+    desc: 'Rich, creamy, and chocolatey.',
+    price: '$6.75',
+    volume: '16 oz',
+    img: mocha,
+    img2x: mocha2x,
+    angle: -225,
+    pos: 'bl',
+  },
+  {
+    key: 'indulgent',
+    label: 'Indulgent',
+    title: 'Treat myself',
+    details: ['Citrus', 'Soda'],
+    name: 'Sparkling citrus',
+    desc: 'Bright, bubbly, and refreshing.',
+    price: '$5.25',
+    volume: '16 oz',
+    img: citrus,
+    img2x: citrus2x,
+    angle: 45,
+    pos: 'br',
+  },
 ]
 
 const TITLE = ['What', 'are', 'you', 'in', 'the', 'mood', 'for?']
@@ -46,29 +99,8 @@ function Chars({ text, offset = 0 }: { text: string; offset?: number }) {
 
 export default function Mood() {
   const [active, setActive] = useState(0)
-  const [revealed, setRevealed] = useState(false)
-  const headingRef = useRef<HTMLDivElement | null>(null)
+  const [headingRef, revealed] = useReveal<HTMLDivElement>({ rootMargin: '0px 0px -20% 0px' })
   const mood = MOODS[active]
-
-  useEffect(() => {
-    const el = headingRef.current
-    if (!el) return
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setRevealed(true)
-      return
-    }
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((e) => e.isIntersecting)) {
-          setRevealed(true)
-          io.disconnect()
-        }
-      },
-      { threshold: 0, rootMargin: '0px 0px -20% 0px' },
-    )
-    io.observe(el)
-    return () => io.disconnect()
-  }, [])
 
   return (
     <section className={`mood${revealed ? ' is-in' : ''}`}>

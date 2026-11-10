@@ -1,4 +1,5 @@
 import { Fragment, useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react'
+import { prefersReducedMotion } from '@/hooks/useReveal'
 
 const dataMask = (svg: string) => `url("data:image/svg+xml,${encodeURIComponent(svg)}")`
 
@@ -28,26 +29,64 @@ const SLIDES: Slide[] = [
     rating: '4.9',
     name: 'Mia Carter',
     words: [
-      'Come', 'for', 'the', 'great', 'coffee,', 'stay\u00A0for', 'the',
-      'perfect', 'playlist', 'and', 'those', 'cinnamon', 'buns',
-      'you’ll\u00A0keep', 'thinking', 'about.',
+      'Come',
+      'for',
+      'the',
+      'great',
+      'coffee,',
+      'stay\u00A0for',
+      'the',
+      'perfect',
+      'playlist',
+      'and',
+      'those',
+      'cinnamon',
+      'buns',
+      'you’ll\u00A0keep',
+      'thinking',
+      'about.',
     ],
   },
   {
     rating: '5.0',
     name: 'Jamie Brooks',
     words: [
-      'Everything', 'you', 'want', 'from', 'a', 'neighborhood', 'coffee',
-      'shop:', 'warm,', 'welcoming,', 'and', 'always', 'worth', 'the', 'walk.',
+      'Everything',
+      'you',
+      'want',
+      'from',
+      'a',
+      'neighborhood',
+      'coffee',
+      'shop:',
+      'warm,',
+      'welcoming,',
+      'and',
+      'always',
+      'worth',
+      'the',
+      'walk.',
     ],
   },
   {
     rating: '5.0',
     name: 'Alex Morgan',
     words: [
-      'The', 'cold', 'brew', 'is', 'smooth,', 'the\u00A0space', 'feels',
-      'effortless,', 'and\u00A0everyone', 'behind', 'the', 'counter', 'is',
-      'genuinely', 'lovely.',
+      'The',
+      'cold',
+      'brew',
+      'is',
+      'smooth,',
+      'the\u00A0space',
+      'feels',
+      'effortless,',
+      'and\u00A0everyone',
+      'behind',
+      'the',
+      'counter',
+      'is',
+      'genuinely',
+      'lovely.',
     ],
   },
 ]
@@ -55,14 +94,11 @@ const SLIDES: Slide[] = [
 const SIDE_W = 640
 const AUTOPLAY_MS = 5100
 
-const prefersReducedMotion = () =>
-  typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
-
 export default function Testimonials() {
   const [active, setActive] = useState(0)
   const [width, setWidth] = useState(0)
-  const [contentIn, setContentIn] = useState(false)
-  const [navIn, setNavIn] = useState(false)
+  const [contentIn, setContentIn] = useState(prefersReducedMotion)
+  const [navIn, setNavIn] = useState(prefersReducedMotion)
   const [isSlideMode, setIsSlideMode] = useState(false)
 
   const stageRef = useRef<HTMLDivElement | null>(null)
@@ -79,11 +115,6 @@ export default function Testimonials() {
   }, [])
 
   useEffect(() => {
-    if (prefersReducedMotion()) {
-      setContentIn(true)
-      setNavIn(true)
-      return
-    }
     const stage = stageRef.current
     const nav = navRef.current
     const ioContent = new IntersectionObserver(
@@ -185,10 +216,20 @@ export default function Testimonials() {
       </div>
 
       <div className="tst-nav" ref={navRef}>
-        <button type="button" className="tst-btn tst-prev" aria-label="Previous testimonial" onClick={() => step(-1)}>
+        <button
+          type="button"
+          className="tst-btn tst-prev"
+          aria-label="Previous testimonial"
+          onClick={() => step(-1)}
+        >
           <span className="tst-arrow" aria-hidden="true" />
         </button>
-        <button type="button" className="tst-btn tst-next" aria-label="Next testimonial" onClick={() => step(1)}>
+        <button
+          type="button"
+          className="tst-btn tst-next"
+          aria-label="Next testimonial"
+          onClick={() => step(1)}
+        >
           <span className="tst-arrow" aria-hidden="true" />
         </button>
       </div>
