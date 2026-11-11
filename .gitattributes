@@ -1,0 +1,15 @@
+# ─────────────────────────────────────────────────────────────
+# GitHub Linguist
+# ─────────────────────────────────────────────────────────────
+# The site ships a single, very large hand-written stylesheet
+# (src/styles/sections.css, ~130 KB) which byte-wise outweighs
+# the whole TypeScript source tree and made GitHub label the
+# repository as a CSS project.
+#
+# The application itself is a React + TypeScript (Vite) app, so
+# the stylesheets are hidden from the language statistics and the
+# repository is reported as TypeScript.
+src/styles/*.css linguist-detectable=false
+
+# Lockfiles and generated output never count towards languages.
+package-lock.json linguist-generated=true
