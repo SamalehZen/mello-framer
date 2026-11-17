@@ -1,0 +1,76 @@
+name: Dependency unblock reminder
+
+# Silent weekly check for the upstream peer-dependency blockers tracked in
+# issue #9 (TypeScript 7 via typescript-eslint, ESLint 10 via
+# eslint-plugin-jsx-a11y). It only speaks up the week a blocker disappears,
+# and never twice for the same dependency.
+on:
+  schedule:
+    # Every Monday, 07:00 UTC.
+    - cron: '0 7 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: dep-unblock
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Check upstream peer ranges
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Probe npm resolution
+        id: probe
+        run: node scripts/check-upstream.mjs
+
+      - name: Comment on the tracking issue
+        if: steps.probe.outputs.unblocked != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          UNBLOCKED: ${{ steps.probe.outputs.unblocked }}
+        run: |
+          set -euo pipefail
+
+          ISSUE=9
+          existing=$(gh issue view "$ISSUE" --json comments --jq '.comments[].body')
+          body=""
+
+          add() {
+            marker=$1
+            message=$2
+            if printf '%s\n' "$existing" | grep -qF "$marker"; then
+              return 0
+            fi
+            body="${body}${marker}"$'\n'"${message}"$'\n'
+          }
+
+          case ",${UNBLOCKED}," in
+            *,typescript,*)
+              add '<!-- dep-unblock:typescript -->' \
+                '- ✅ **TypeScript 7** is unblocked upstream: rebase #6 (`@dependabot rebase`) and merge once CI is green.'
+              ;;
+          esac
+
+          case ",${UNBLOCKED}," in
+            *,eslint,*)
+              add '<!-- dep-unblock:eslint -->' \
+                '- ✅ **ESLint 10** is unblocked upstream: rebase #8 (`@dependabot rebase`) and merge once CI is green.'
+              ;;
+          esac
+
+          if [ -z "$body" ]; then
+            echo "Nothing new to report."
+            exit 0
+          fi
+
+          gh issue comment "$ISSUE" --body "$(printf '%s\n\n%s' 'Weekly check: an upstream blocker is gone.' "$body")"
