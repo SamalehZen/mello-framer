@@ -8,8 +8,9 @@ Same layout, same typography, same motion — across desktop, tablet and mobile.
 
 [![Live demo](https://img.shields.io/badge/Live%20demo-hypeer.cloud%2Fmello-78BF30?style=for-the-badge&logo=googlechrome&logoColor=white)](https://hypeer.cloud/mello/)
 [![CI](https://github.com/SamalehZen/mello-framer/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/SamalehZen/mello-framer/actions/workflows/ci.yml)
+[![Deploy](https://github.com/SamalehZen/mello-framer/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/SamalehZen/mello-framer/actions/workflows/deploy.yml)
 
-![Vite](https://img.shields.io/badge/Vite-7-646CFF?logo=vite&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white)
 ![Vitest](https://img.shields.io/badge/tests-Vitest%20%2B%20Playwright-6E9F18?logo=vitest&logoColor=white)
@@ -110,7 +111,7 @@ than blanket-scaled, so each viewport is genuinely first-class.
 
 | Layer   | Choice                                                        |
 | ------- | ------------------------------------------------------------- |
-| Build   | **Vite 7**                                                    |
+| Build   | **Vite 8**                                                    |
 | UI      | **React 19** + **TypeScript 5.9** (strict)                    |
 | Styling | Hand-written CSS with custom properties                       |
 | Fonts   | Self-hosted **Londrina Solid**, **Gochi Hand**, **Inter**     |
@@ -142,6 +143,12 @@ things per viewport:
 
 A React **error boundary** at the root turns an unexpected render crash into a
 branded recovery screen rather than a blank page.
+
+**Dependencies** are maintained by [Dependabot][dependabot] — npm weekly (minor
+and patch grouped into a single PR), GitHub Actions monthly. Every bump arrives
+as a pull request and must pass the same gates before it can be merged.
+
+[dependabot]: .github/dependabot.yml
 
 ---
 
@@ -233,16 +240,36 @@ docs/
 
 ## 🌍 Deployment
 
-The build honours a configurable base path, so it can be served from a
+`main` is published automatically, and **only when CI is green**:
+
+```
+push to main → CI (typecheck · lint · format · build · unit · e2e) → Deploy to GitHub Pages
+```
+
+| Item       | Value                                                                 |
+| ---------- | --------------------------------------------------------------------- |
+| Preview    | **https://samalehzen.github.io/mello-framer/**                        |
+| Production | **https://hypeer.cloud/mello/**                                       |
+| Pipeline   | `.github/workflows/ci.yml`, then `.github/workflows/deploy.yml`       |
+| Gate       | Pages runs on the completed CI run and skips any result but `success` |
+
+The Pages job checks out the exact commit CI validated, so a failing test can
+never reach the preview URL. A manual redeploy is available from the _Actions_
+tab: **Deploy to GitHub Pages → Run workflow**.
+
+The build honours a configurable base path, so it can be served from any
 subdirectory:
 
 ```bash
-BASE=/mello/ npm run build
+BASE=/mello-framer/ npm run build   # GitHub Pages project site
+BASE=/mello/ npm run build          # production sub-path
 # copy the emitted files (default: dist/) to your web root
 ```
 
-The head metadata (`index.html`), `robots.txt` and `sitemap.xml` target
-`https://hypeer.cloud/mello/`; update those URLs if the site moves.
+Asset links (`favicon`, `apple-touch-icon`) use `%BASE_URL%`, so they follow the
+base automatically. The head metadata (`index.html`), `robots.txt` and
+`sitemap.xml` target `https://hypeer.cloud/mello/`; update those URLs if the
+site moves.
 
 ---
 
