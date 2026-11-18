@@ -10,7 +10,8 @@ import { join } from 'node:path'
 // Keep in sync with issue #9.
 const CHECKS = [
   { key: 'typescript', major: 7, label: 'TypeScript 7', pr: 6, blockedBy: 'typescript-eslint' },
-  { key: 'eslint', major: 10, label: 'ESLint 10', pr: 8, blockedBy: 'eslint-plugin-jsx-a11y' },
+  // Two pull requests ride on this blocker: `eslint` (#11) and `@eslint/js` (#12).
+  { key: 'eslint', major: 10, label: 'ESLint 10', pr: 11, blockedBy: 'eslint-plugin-jsx-a11y' },
 ]
 
 const pkg = JSON.parse(readFileSync('package.json', 'utf8'))
