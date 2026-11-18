@@ -58,12 +58,13 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           PR: ${{ github.event.pull_request.number }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
           set -euo pipefail
 
           marker='<!-- preview-build -->'
           body=$(printf '%s\n\n**Preview build** for `%s` — production build, ready to inspect.\n\n%s\nDownload: **Artifacts → preview-pr-%s** on this run, then\n\n```bash\nunzip preview-pr-%s.zip -d preview && npx serve preview\n```' \
-            "$marker" "$(git rev-parse --short HEAD)" "$(cat bundle.md)" "$PR" "$PR")
+            "$marker" "${HEAD_SHA:0:7}" "$(cat bundle.md)" "$PR" "$PR")
 
           existing=$(gh api "repos/${GITHUB_REPOSITORY}/issues/${PR}/comments" --paginate \
             --jq '.[] | select(.body | startswith("<!-- preview-build -->")) | .id' | head -n1)

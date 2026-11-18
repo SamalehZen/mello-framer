@@ -5,6 +5,8 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 5
+    # Keep PRs rebased automatically once `main` requires up-to-date branches.
+    rebase-strategy: auto
     groups:
       # React, Vite and their plugins move together and are best reviewed as
       # one change; everything else stays individually revertable.
@@ -17,5 +19,6 @@ updates:
 
   - package-ecosystem: github-actions
     directory: /
+    rebase-strategy: auto
     schedule:
       interval: monthly
