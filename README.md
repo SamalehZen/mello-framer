@@ -264,9 +264,11 @@ push to main → CI (typecheck · lint · format · build · unit · e2e) → De
 | Gate       | Pages runs on the completed CI run and skips any result but `success` |
 
 `main` is protected: changes land through a pull request whose CI checks
-(`Typecheck · Lint · Unit` and `End-to-end`) must be green, force-pushes and
-branch deletion are refused, and every merge is squashed into a single linear
-commit. The owner keeps an administrative escape hatch for emergencies.
+(`Typecheck · Lint · Unit` and `End-to-end`) must be green **and current with
+`main`**, review conversations must be resolved, force-pushes and branch deletion
+are refused, and every merge is squashed into a single linear commit. The rules
+also apply to administrators: bypassing them means changing the settings, not a
+silent push behind the checks' back.
 
 Runtime errors are reported only if the repository variable
 `VITE_REPORT_ENDPOINT` is set: `src/lib/report.ts` then POSTs render crashes,
