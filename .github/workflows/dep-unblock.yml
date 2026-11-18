@@ -48,6 +48,8 @@ jobs:
           add() {
             marker=$1
             message=$2
+            # Markers carry a version suffix: bumping it re-posts the reminder when
+            # the message itself becomes stale (closed PR numbers, new advice).
             if printf '%s\n' "$existing" | grep -qF "$marker"; then
               return 0
             fi
@@ -56,15 +58,15 @@ jobs:
 
           case ",${UNBLOCKED}," in
             *,typescript,*)
-              add '<!-- dep-unblock:typescript -->' \
-                '- ✅ **TypeScript 7** is unblocked upstream: update #6 (*Update branch*, or `PUT /pulls/6/update-branch`) and merge once CI is green.'
+              add '<!-- dep-unblock:typescript:v2 -->' \
+                '- ✅ **TypeScript 7** is unblocked upstream: update #6 (*Update branch* on the pull request page) and merge once CI is green.'
               ;;
           esac
 
           case ",${UNBLOCKED}," in
             *,eslint,*)
-              add '<!-- dep-unblock:eslint -->' \
-                '- ✅ **ESLint 10** is unblocked upstream: update #11 and #12 (*Update branch*) and merge them in that order once CI is green.'
+              add '<!-- dep-unblock:eslint:v2 -->' \
+                '- ✅ **ESLint 10** is unblocked upstream: update #11 and #12 (*Update branch* on each pull request) and merge them in that order once CI is green.'
               ;;
           esac
 
