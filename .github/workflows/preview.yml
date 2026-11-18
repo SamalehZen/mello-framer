@@ -1,0 +1,77 @@
+name: Preview build
+
+# Staging stand-in: every pull request gets a production-identical build,
+# downloadable as an artifact and summarised in a single, continuously updated
+# comment. True per-PR URLs would need an external host (Netlify, Cloudflare
+# Pages…), which this repository does not depend on.
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: preview-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Preview bundle
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build
+        run: npm run build
+        env:
+          BASE: /${{ github.event.repository.name }}/
+          VITE_REPORT_ENDPOINT: ${{ vars.VITE_REPORT_ENDPOINT }}
+
+      - name: Summarise the bundle
+        run: |
+          {
+            printf '**Total:** %s\n\n' "$(du -sh dist | cut -f1)"
+            printf '**Largest assets**\n\n'
+            find dist/assets -type f -printf '%s\t%p\n' \
+              | sort -rn | head -5 \
+              | awk -F'\t' '{ printf "- `%s` — %.1f kB\n", $2, $1 / 1024 }'
+          } > bundle.md
+          cat bundle.md
+
+      - name: Upload the preview bundle
+        uses: actions/upload-artifact@v7
+        with:
+          name: preview-pr-${{ github.event.pull_request.number }}
+          path: dist
+          retention-days: 7
+
+      - name: Upsert the pull request comment
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          set -euo pipefail
+
+          marker='<!-- preview-build -->'
+          body=$(printf '%s\n\n**Preview build** for `%s` — production build, ready to inspect.\n\n%s\nDownload: **Artifacts → preview-pr-%s** on this run, then\n\n```bash\nunzip preview-pr-%s.zip -d preview && npx serve preview\n```' \
+            "$marker" "$(git rev-parse --short HEAD)" "$(cat bundle.md)" "$PR" "$PR")
+
+          existing=$(gh api "repos/${GITHUB_REPOSITORY}/issues/${PR}/comments" --paginate \
+            --jq '.[] | select(.body | startswith("<!-- preview-build -->")) | .id' | head -n1)
+
+          if [ -n "$existing" ]; then
+            gh api -X PATCH "repos/${GITHUB_REPOSITORY}/issues/comments/${existing}" \
+              -f body="$body" >/dev/null
+          else
+            gh api -X POST "repos/${GITHUB_REPOSITORY}/issues/${PR}/comments" \
+              -f body="$body" >/dev/null
+          fi

@@ -1,12 +1,13 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react'
+import { report } from '@/lib/report'
 
 type Props = { children: ReactNode }
 type State = { error: Error | null }
 
 /**
  * Last-resort boundary: keeps a render crash from blanking the whole page and
- * offers a way back. In a production app `componentDidCatch` is also where a
- * reporting service (Sentry, etc.) would be wired in.
+ * offers a way back. Crashes are forwarded to the (optional) reporter so they
+ * do not disappear silently in production.
  */
 export default class ErrorBoundary extends Component<Props, State> {
   override state: State = { error: null }
@@ -17,6 +18,12 @@ export default class ErrorBoundary extends Component<Props, State> {
 
   override componentDidCatch(error: Error, info: ErrorInfo) {
     console.error('Unhandled render error', error, info.componentStack)
+    report({
+      kind: 'error',
+      message: error.message,
+      stack: error.stack,
+      source: info.componentStack ?? undefined,
+    })
   }
 
   override render() {

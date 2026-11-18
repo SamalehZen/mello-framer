@@ -47,6 +47,8 @@ jobs:
         run: npm run build
         env:
           BASE: /${{ github.event.repository.name }}/
+          # Optional: set the repository variable to enable error reporting.
+          VITE_REPORT_ENDPOINT: ${{ vars.VITE_REPORT_ENDPOINT }}
 
       - uses: actions/configure-pages@v5
 
