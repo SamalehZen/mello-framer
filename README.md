@@ -148,6 +148,16 @@ branded recovery screen rather than a blank page.
 and patch grouped into a single PR), GitHub Actions monthly. Every bump arrives
 as a pull request and must pass the same gates before it can be merged.
 
+**Security** runs on two levels: [CodeQL][codeql] statically analyses the
+application code on every push and pull request (plus a weekly scheduled pass),
+and secret scanning with push protection is enabled on the repository.
+
+**Preview builds** give every pull request a production-identical bundle: it is
+uploaded as a workflow artifact and summarised in a single, continuously updated
+PR comment (total size + largest assets), so a change can be inspected before it
+ever reaches `main`.
+
+[codeql]: .github/workflows/codeql.yml
 [dependabot]: .github/dependabot.yml
 
 ---
@@ -252,6 +262,16 @@ push to main → CI (typecheck · lint · format · build · unit · e2e) → De
 | Production | **https://hypeer.cloud/mello/**                                       |
 | Pipeline   | `.github/workflows/ci.yml`, then `.github/workflows/deploy.yml`       |
 | Gate       | Pages runs on the completed CI run and skips any result but `success` |
+
+`main` is protected: changes land through a pull request whose CI checks
+(`Typecheck · Lint · Unit` and `End-to-end`) must be green, force-pushes and
+branch deletion are refused, and every merge is squashed into a single linear
+commit. The owner keeps an administrative escape hatch for emergencies.
+
+Runtime errors are reported only if the repository variable
+`VITE_REPORT_ENDPOINT` is set: `src/lib/report.ts` then POSTs render crashes,
+uncaught errors and unhandled rejections as JSON to that URL (no third-party SDK,
+no request at all when the variable is empty).
 
 The Pages job checks out the exact commit CI validated, so a failing test can
 never reach the preview URL. A manual redeploy is available from the _Actions_
