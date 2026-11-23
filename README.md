@@ -293,8 +293,19 @@ subdirectory:
 ```bash
 BASE=/mello-framer/ npm run build   # GitHub Pages project site
 BASE=/mello/ npm run build          # production sub-path
-# copy the emitted files (default: dist/) to your web root
 ```
+
+**Production** is a plain directory served by nginx, published by a script
+instead of a hand copy — the manual copy had silently fallen weeks behind
+(a stale `og-image.jpg` returned 404 for days):
+
+```bash
+PROD_DIR=/var/www/site/mello scripts/deploy-prod.sh
+```
+
+It refuses to run from a dirty tree or a branch other than `main`, tars the
+current webroot as a backup next to it, rebuilds with `BASE=/mello/` and mirrors
+the result with `rsync --delete` (scoped to that directory).
 
 Asset links (`favicon`, `apple-touch-icon`) use `%BASE_URL%`, so they follow the
 base automatically. The head metadata (`index.html`), `robots.txt` and
