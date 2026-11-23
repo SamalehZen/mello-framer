@@ -13,8 +13,10 @@ set -euo pipefail
 
 : "${PROD_DIR:?set PROD_DIR to the production webroot, e.g. /var/www/site/mello}"
 
-# The build writes to dist/ relative to the project root, not the caller.
+# The build writes to dist/ relative to the project root, and every guard below
+# compares physical paths, so both sides are resolved before any comparison.
 cd "$(dirname "$0")/.."
+repo_root=$(pwd -P)
 
 fail() {
   printf 'deploy: %s\n' "$1" >&2
@@ -22,28 +24,55 @@ fail() {
 }
 
 [[ -d "$PROD_DIR" ]] || fail "PROD_DIR does not exist: $PROD_DIR"
-[[ -f "$PROD_DIR/index.html" ]] || fail "PROD_DIR does not look like a webroot (no index.html): $PROD_DIR"
+target=$(cd "$PROD_DIR" && pwd -P)
+[[ -f "$target/index.html" ]] || fail "PROD_DIR does not look like a webroot (no index.html): $target"
 
-# `rsync --delete` mirrors, so a wrong target would wipe a sibling site.
-case "$PROD_DIR" in
-  / | /var | /var/www | /usr/share/nginx/html)
-    fail "refusing to deploy to $PROD_DIR: pick the site's own directory"
-    ;;
+# `rsync --delete` mirrors, so a wrong target would wipe a sibling site — or the
+# checkout itself, which is what `.`, `..` or a path inside the repo would do.
+case "$target" in
+  / | /var | /var/www | /usr/share/nginx/html) fail "refusing to deploy to $target" ;;
+esac
+case "$target/" in
+  "$repo_root/"*) fail "refusing to deploy into the repository: $target" ;;
+esac
+case "$repo_root/" in
+  "$target/"*) fail "refusing to mirror over a directory that contains the repository: $target" ;;
 esac
 
 [[ "$(git rev-parse --abbrev-ref HEAD)" == 'main' ]] || fail 'deploy from main only'
 [[ -z "$(git status --porcelain)" ]] || fail 'working tree is dirty: commit or stash first'
 
-stamp=$(date -u +%Y%m%d-%H%M%S)
-backup_dir=${PROD_BACKUP_DIR:-$(dirname "$PROD_DIR")}
-backup="$backup_dir/backup-$(basename "$PROD_DIR")-$stamp.tar.gz"
-tar -czf "$backup" -C "$(dirname "$PROD_DIR")" "$(basename "$PROD_DIR")"
+# The backup has to survive the mirror, so it cannot live inside it.
+backup_dir=${PROD_BACKUP_DIR:-$(dirname "$target")}
+mkdir -p "$backup_dir"
+backup_dir=$(cd "$backup_dir" && pwd -P)
+case "$backup_dir/" in
+  "$target/"*) fail 'PROD_BACKUP_DIR must stay outside PROD_DIR, or the mirror deletes the backup' ;;
+esac
+
+backup="$backup_dir/backup-$(basename "$target")-$(date -u +%Y%m%d-%H%M%S)-$RANDOM$RANDOM.tar.gz"
+if [[ -e "$backup" ]]; then
+  fail "backup already exists: $backup"
+fi
+tar -czf "$backup" -C "$(dirname "$target")" "$(basename "$target")"
 printf 'deploy: backup written to %s\n' "$backup"
 
 BASE=/mello/ npm run build
 
-# Mirror, but keep the mirror itself readable by the web server.
-rsync -a --delete --chmod=D755,F644 dist/ "$PROD_DIR/"
+# --delete-after copies first and deletes last: a transfer interrupted midway
+# leaves the live site intact instead of pointing at files that never arrived.
+rsync -a --delete-after --chmod=D755,F644 dist/ "$target/"
 
-printf 'deploy: %s published to %s (%s files)\n' \
-  "$(git rev-parse --short HEAD)" "$PROD_DIR" "$(find dist -type f | wc -l)"
+# A build made with the wrong base path references paths that do not exist; the
+# page would still answer 200 while every asset 404s.
+mapfile -t referenced < <(grep -oE '/mello/(assets|icons)/[A-Za-z0-9._-]+' "$target/index.html" | sort -u)
+[[ ${#referenced[@]} -gt 0 ]] || fail "no /mello/ asset reference in index.html: built with the wrong BASE?"
+
+for path in "${referenced[@]}"; do
+  if [[ ! -f "$target/${path#/mello/}" ]]; then
+    fail "published build references a missing file: $path"
+  fi
+done
+
+printf 'deploy: %s published to %s (%s files, %s referenced assets verified)\n' \
+  "$(git rev-parse --short HEAD)" "$target" "$(find dist -type f | wc -l)" "${#referenced[@]}"
