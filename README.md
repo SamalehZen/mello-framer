@@ -280,8 +280,8 @@ name, start URL, `display: standalone` and the 192/512 icons Chrome looks for,
 including a `maskable` variant that survives Android's icon masks; the head adds
 the `apple-mobile-web-app-*` hints for the iOS home screen. No service worker is
 involved — Chrome dropped that requirement, and a cache we do not need would
-only risk serving a stale build. `src/test/manifest.test.ts` fails the build if
-any of those pieces regress.
+only risk serving a stale build. `src/test/manifest.test.ts` fails the unit job —
+and therefore the deploy — if any of those pieces regress.
 
 The Pages job checks out the exact commit CI validated, so a failing test can
 never reach the preview URL. A manual redeploy is available from the _Actions_
