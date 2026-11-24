@@ -1,0 +1,79 @@
+import { act, fireEvent, render, screen } from '@testing-library/react'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import InstallPrompt from './InstallPrompt'
+import type { BeforeInstallPromptEvent } from '@/hooks/useInstallPrompt'
+
+const CHROME_UA =
+  'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36'
+const SAFARI_IOS_UA =
+  'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1'
+
+function setUserAgent(userAgent: string) {
+  Object.defineProperty(window.navigator, 'userAgent', { value: userAgent, configurable: true })
+}
+
+function offerInstall(outcome: 'accepted' | 'dismissed' = 'accepted') {
+  const event = new Event('beforeinstallprompt', {
+    cancelable: true,
+  }) as BeforeInstallPromptEvent
+  event.prompt = vi.fn().mockResolvedValue(undefined)
+  event.userChoice = Promise.resolve({ outcome, platform: 'web' })
+  act(() => {
+    window.dispatchEvent(event)
+  })
+  return event
+}
+
+beforeEach(() => {
+  window.localStorage.clear()
+  setUserAgent(CHROME_UA)
+})
+
+afterEach(() => {
+  vi.restoreAllMocks()
+})
+
+describe('InstallPrompt', () => {
+  it('renders nothing when no install path exists', () => {
+    const { container } = render(<InstallPrompt />)
+    expect(container).toBeEmptyDOMElement()
+  })
+
+  it('offers the native install once the browser allows it', () => {
+    render(<InstallPrompt />)
+    offerInstall()
+
+    expect(screen.getByText('Install Mello')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Install' })).toBeInTheDocument()
+    expect(screen.getByRole('dialog', { name: 'Install Mello' })).toBeInTheDocument()
+  })
+
+  it('triggers the native dialog from the Install button', async () => {
+    render(<InstallPrompt />)
+    const event = offerInstall()
+
+    await act(async () => {
+      fireEvent.click(screen.getByRole('button', { name: 'Install' }))
+    })
+
+    expect(event.prompt).toHaveBeenCalledOnce()
+  })
+
+  it('shows Share-sheet instructions instead of a button on iOS', () => {
+    setUserAgent(SAFARI_IOS_UA)
+    render(<InstallPrompt />)
+
+    expect(screen.getByText(/Add to Home Screen/)).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Install' })).not.toBeInTheDocument()
+  })
+
+  it('is dismissed and stays dismissed', () => {
+    const { container } = render(<InstallPrompt />)
+    offerInstall()
+
+    fireEvent.click(screen.getByRole('button', { name: 'Dismiss install prompt' }))
+
+    expect(container).toBeEmptyDOMElement()
+    expect(window.localStorage.getItem('mello:install-dismissed')).toBeTruthy()
+  })
+})

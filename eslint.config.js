@@ -29,6 +29,16 @@ export default tseslint.config(
     },
   },
   {
+    // Classic service worker: runs in ServiceWorkerGlobalScope, where `self`,
+    // `caches` and `clients` exist and the module scope does not.
+    files: ['public/sw.js'],
+    languageOptions: {
+      ecmaVersion: 2022,
+      sourceType: 'script',
+      globals: { ...globals.serviceworker, ...globals.browser },
+    },
+  },
+  {
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
       ecmaVersion: 2022,

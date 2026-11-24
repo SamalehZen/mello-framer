@@ -275,13 +275,27 @@ Runtime errors are reported only if the repository variable
 uncaught errors and unhandled rejections as JSON to that URL (no third-party SDK,
 no request at all when the variable is empty).
 
-The site is also **installable as an app**. `public/manifest.json` carries the
-name, start URL, `display: standalone` and the 192/512 icons Chrome looks for,
-including a `maskable` variant that survives Android's icon masks; the head adds
-the `apple-mobile-web-app-*` hints for the iOS home screen. No service worker is
-involved — Chrome dropped that requirement, and a cache we do not need would
-only risk serving a stale build. `src/test/manifest.test.ts` fails the unit job —
-and therefore the deploy — if any of those pieces regress.
+The site is also **installable as an app**, and offers it in its own words.
+`public/manifest.json` carries the name, start URL, `display: standalone` and the
+192/512 icons Chrome looks for, including a `maskable` variant that survives
+Android's icon masks; the head adds the `apple-mobile-web-app-*` hints for the
+iOS home screen.
+
+`src/components/InstallPrompt.tsx` is the offer itself, styled from the site's
+own tokens. It appears only when installation is actually possible: on
+Chrome/Edge it keeps the `beforeinstallprompt` event and the **Install** button
+opens the native dialog; on iOS Safari, which has no such event, it shows the
+Share-sheet instructions instead. It stays hidden when the app already runs
+standalone (`display-mode`, `navigator.standalone`), a dismissal is remembered
+for a month, and browsers that cannot install see nothing at all.
+
+`public/sw.js` lets the page load offline. Navigations and the manifest are
+network-first, so a new deploy is picked up on the next load instead of being
+served from cache; fingerprinted `/assets/*` are cache-first (their names change
+every build); the rest refreshes in the background. Registration is
+production-only and base-relative, so the same build serves `/mello/` and
+`/mello-framer/`. `src/test/manifest.test.ts` (manifest + worker) and the prompt
+unit tests fail the job — and therefore the deploy — if any piece regresses.
 
 The Pages job checks out the exact commit CI validated, so a failing test can
 never reach the preview URL. A manual redeploy is available from the _Actions_
