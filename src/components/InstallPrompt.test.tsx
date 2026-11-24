@@ -47,17 +47,20 @@ describe('InstallPrompt', () => {
     render(<InstallPrompt />)
     offerInstall()
 
-    expect(screen.getByText('Install Mello')).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Install' })).toBeInTheDocument()
-    expect(screen.getByRole('dialog', { name: 'Install Mello' })).toBeInTheDocument()
+    expect(screen.getByText('Installer Mello')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Installer' })).toBeInTheDocument()
+
+    // French copy on an English page, so it is tagged for screen readers.
+    const dialog = screen.getByRole('dialog', { name: 'Installer Mello' })
+    expect(dialog).toHaveAttribute('lang', 'fr')
   })
 
-  it('triggers the native dialog from the Install button', async () => {
+  it('triggers the native dialog from the install button', async () => {
     render(<InstallPrompt />)
     const event = offerInstall()
 
     await act(async () => {
-      fireEvent.click(screen.getByRole('button', { name: 'Install' }))
+      fireEvent.click(screen.getByRole('button', { name: 'Installer' }))
     })
 
     expect(event.prompt).toHaveBeenCalledOnce()
@@ -67,15 +70,15 @@ describe('InstallPrompt', () => {
     setUserAgent(SAFARI_IOS_UA)
     render(<InstallPrompt />)
 
-    expect(screen.getByText(/Add to Home Screen/)).toBeInTheDocument()
-    expect(screen.queryByRole('button', { name: 'Install' })).not.toBeInTheDocument()
+    expect(screen.getByText(/Sur l.écran d.accueil/)).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Installer' })).not.toBeInTheDocument()
   })
 
   it('is dismissed and stays dismissed across a remount', () => {
     const first = render(<InstallPrompt />)
     offerInstall()
 
-    fireEvent.click(screen.getByRole('button', { name: 'Dismiss install prompt' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Fermer' }))
 
     expect(first.container).toBeEmptyDOMElement()
     expect(window.localStorage.getItem('mello:install-dismissed')).toBeTruthy()

@@ -283,9 +283,10 @@ iOS home screen.
 
 `src/components/InstallPrompt.tsx` is the offer itself, styled from the site's
 own tokens. It appears only when installation is actually possible: on
-Chrome/Edge it keeps the `beforeinstallprompt` event and the **Install** button
-opens the native dialog; on iOS Safari, which has no such event, it shows the
-Share-sheet instructions instead. It stays hidden when the app already runs
+Chrome/Edge it keeps the `beforeinstallprompt` event and its button opens the
+native dialog; on iOS Safari, which has no such event, it shows the Share-sheet
+instructions instead. The copy is French, and the card is tagged `lang="fr"`
+since the document is English. It stays hidden when the app already runs
 standalone (`display-mode`, `navigator.standalone`), a dismissal is remembered
 for a month, and browsers that cannot install see nothing at all.
 

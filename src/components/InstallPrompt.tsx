@@ -8,6 +8,9 @@ import { SITE } from '@/config/site'
  * 20px radius, the grass `.btn-primary` — so it reads as part of the page. It
  * renders nothing unless a real install path exists, and stays out of the way at
  * the bottom of the viewport.
+ *
+ * The copy is French, so the subtree carries `lang="fr"`: the document is
+ * English and a screen reader would otherwise pronounce it wrong.
  */
 export default function InstallPrompt() {
   const { visible, mode, install, dismiss } = useInstallPrompt()
@@ -16,7 +19,7 @@ export default function InstallPrompt() {
   const isIos = mode === 'ios'
 
   return (
-    <div className="install-prompt" role="dialog" aria-labelledby="install-prompt-title">
+    <div className="install-prompt" role="dialog" lang="fr" aria-labelledby="install-prompt-title">
       <img
         className="install-prompt-logo"
         src={`${import.meta.env.BASE_URL}icons/icon-192.png`}
@@ -26,12 +29,12 @@ export default function InstallPrompt() {
       />
       <div className="install-prompt-body">
         <p className="install-prompt-title" id="install-prompt-title">
-          Install {SITE.name}
+          Installer {SITE.name}
         </p>
         <p className="install-prompt-message">
           {isIos
-            ? 'Tap Share, then “Add to Home Screen”.'
-            : 'Menu, hours and directions in one tap — even offline.'}
+            ? 'Appuyez sur Partager, puis « Sur l’écran d’accueil ».'
+            : 'Menu, horaires et itinéraire en un tap — même hors ligne.'}
         </p>
       </div>
       {isIos ? null : (
@@ -40,15 +43,10 @@ export default function InstallPrompt() {
           className="btn btn-primary install-prompt-action"
           onClick={() => void install()}
         >
-          Install
+          Installer
         </button>
       )}
-      <button
-        type="button"
-        className="install-prompt-close"
-        onClick={dismiss}
-        aria-label="Dismiss install prompt"
-      >
+      <button type="button" className="install-prompt-close" onClick={dismiss} aria-label="Fermer">
         <span aria-hidden="true">×</span>
       </button>
     </div>
