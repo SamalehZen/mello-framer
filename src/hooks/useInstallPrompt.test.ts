@@ -1,5 +1,6 @@
 import { act, renderHook } from '@testing-library/react'
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
+import { resetDeferredInstallPrompt, watchInstallPrompt } from '@/lib/installPrompt'
 import { useInstallPrompt, type BeforeInstallPromptEvent } from './useInstallPrompt'
 
 const CHROME_UA =
@@ -45,7 +46,11 @@ const fire = (type: string, event?: Event) =>
     window.dispatchEvent(event ?? new Event(type))
   })
 
+// The event is captured by the store, exactly as `main.tsx` wires it up.
+beforeAll(() => watchInstallPrompt())
+
 beforeEach(() => {
+  resetDeferredInstallPrompt()
   window.localStorage.clear()
   setUserAgent(CHROME_UA)
 })
@@ -147,6 +152,32 @@ describe('useInstallPrompt', () => {
     const second = renderHook(() => useInstallPrompt())
     fire('beforeinstallprompt', installEvent())
     expect(second.result.current.visible).toBe(false)
+  })
+
+  it('re-offers once the dismissal window has elapsed', () => {
+    setUserAgent(SAFARI_IOS_UA)
+    // Dismissed 31 days ago: outside the one-month window, so the offer returns.
+    window.localStorage.setItem(
+      'mello:install-dismissed',
+      String(Date.now() - 31 * 24 * 60 * 60 * 1000),
+    )
+
+    const { result } = renderHook(() => useInstallPrompt())
+
+    expect(result.current.visible).toBe(true)
+    expect(result.current.mode).toBe('ios')
+  })
+
+  it('stays quiet while the dismissal window is open', () => {
+    setUserAgent(SAFARI_IOS_UA)
+    window.localStorage.setItem(
+      'mello:install-dismissed',
+      String(Date.now() - 2 * 24 * 60 * 60 * 1000),
+    )
+
+    const { result } = renderHook(() => useInstallPrompt())
+
+    expect(result.current.visible).toBe(false)
   })
 
   it('returns unavailable when there is no deferred dialog', async () => {

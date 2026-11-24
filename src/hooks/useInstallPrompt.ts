@@ -1,14 +1,11 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState, useSyncExternalStore } from 'react'
+import {
+  clearDeferredInstallPrompt,
+  getDeferredInstallPrompt,
+  subscribeInstallPrompt,
+} from '@/lib/installPrompt'
 
-/**
- * The event Chrome/Edge fire when the site satisfies the install criteria. It
- * is not in `lib.dom`, so it is declared here; `prompt()` is the only way to
- * open the native install dialog.
- */
-export type BeforeInstallPromptEvent = Event & {
-  prompt: () => Promise<void>
-  userChoice: Promise<{ outcome: 'accepted' | 'dismissed'; platform: string }>
-}
+export type { BeforeInstallPromptEvent } from '@/lib/installPrompt'
 
 const DISMISS_KEY = 'mello:install-dismissed'
 /** After a dismissal the offer stays quiet for a month before returning. */
@@ -24,7 +21,7 @@ function isStandalone(): boolean {
 }
 
 /**
- * iOS Safari cannot install from script, so the popup explains the Share sheet
+ * iOS Safari cannot install from script, so the offer explains the Share sheet
  * instead. Every iOS browser is WebKit, but only Safari can add to the home
  * screen, hence the exclusion list. iPadOS reports itself as a Mac, recognised
  * by its touch points.
@@ -55,7 +52,7 @@ function rememberDismissal(): void {
   try {
     window.localStorage.setItem(DISMISS_KEY, String(Date.now()))
   } catch {
-    // Not being able to persist the choice only means the popup may return.
+    // Not being able to persist the choice only means the offer may return.
   }
 }
 
@@ -75,37 +72,34 @@ export type InstallPrompt = {
 /**
  * Drives the "install this site" offer.
  *
- * Chromium: keeps the deferred `beforeinstallprompt` event so the button can
- * call `prompt()` inside the user's click — browsers ignore it otherwise.
+ * Chromium: reads the deferred `beforeinstallprompt` event buffered in
+ * `lib/installPrompt` so the button can call `prompt()` inside the user's click
+ * — browsers ignore it otherwise.
  * iOS: no such event exists, so the offer switches to instructions.
  * Installed or recently dismissed: nothing is offered at all.
  */
 export function useInstallPrompt(): InstallPrompt {
-  const [deferred, setDeferred] = useState<BeforeInstallPromptEvent | null>(null)
+  const deferred = useSyncExternalStore(
+    subscribeInstallPrompt,
+    getDeferredInstallPrompt,
+    getDeferredInstallPrompt,
+  )
   const [installed, setInstalled] = useState(isStandalone)
   const [dismissed, setDismissed] = useState(wasRecentlyDismissed)
   const [isIos] = useState(isIosSafari)
 
   useEffect(() => {
-    const onBeforeInstall = (event: Event) => {
-      // Without this the browser shows its own mini-infobar and the event is
-      // lost for the custom button.
-      event.preventDefault()
-      setDeferred(event as BeforeInstallPromptEvent)
-    }
     const onInstalled = () => {
       setInstalled(true)
-      setDeferred(null)
+      clearDeferredInstallPrompt()
     }
     const displayMode = window.matchMedia('(display-mode: standalone)')
     const onDisplayMode = () => setInstalled(isStandalone())
 
-    window.addEventListener('beforeinstallprompt', onBeforeInstall)
     window.addEventListener('appinstalled', onInstalled)
     displayMode.addEventListener('change', onDisplayMode)
 
     return () => {
-      window.removeEventListener('beforeinstallprompt', onBeforeInstall)
       window.removeEventListener('appinstalled', onInstalled)
       displayMode.removeEventListener('change', onDisplayMode)
     }
@@ -116,7 +110,7 @@ export function useInstallPrompt(): InstallPrompt {
     await deferred.prompt()
     const { outcome } = await deferred.userChoice
     // The event can only be used once; a second click would do nothing.
-    setDeferred(null)
+    clearDeferredInstallPrompt()
     if (outcome === 'dismissed') {
       rememberDismissal()
       setDismissed(true)

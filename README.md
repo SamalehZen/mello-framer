@@ -293,9 +293,10 @@ for a month, and browsers that cannot install see nothing at all.
 network-first, so a new deploy is picked up on the next load instead of being
 served from cache; fingerprinted `/assets/*` are cache-first (their names change
 every build); the rest refreshes in the background. Registration is
-production-only and base-relative, so the same build serves `/mello/` and
-`/mello-framer/`. `src/test/manifest.test.ts` (manifest + worker) and the prompt
-unit tests fail the job — and therefore the deploy — if any piece regresses.
+production-only and takes its path from the configured base, so it follows
+wherever the build is served (`/`, `/mello/`, `/mello-framer/`).
+`src/test/manifest.test.ts` (manifest + worker) and the prompt unit tests fail
+the CI-gated deploy if any piece regresses.
 
 The Pages job checks out the exact commit CI validated, so a failing test can
 never reach the preview URL. A manual redeploy is available from the _Actions_

@@ -1,6 +1,7 @@
 import { act, fireEvent, render, screen } from '@testing-library/react'
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import InstallPrompt from './InstallPrompt'
+import { resetDeferredInstallPrompt, watchInstallPrompt } from '@/lib/installPrompt'
 import type { BeforeInstallPromptEvent } from '@/hooks/useInstallPrompt'
 
 const CHROME_UA =
@@ -24,7 +25,10 @@ function offerInstall(outcome: 'accepted' | 'dismissed' = 'accepted') {
   return event
 }
 
+beforeAll(() => watchInstallPrompt())
+
 beforeEach(() => {
+  resetDeferredInstallPrompt()
   window.localStorage.clear()
   setUserAgent(CHROME_UA)
 })
@@ -67,13 +71,19 @@ describe('InstallPrompt', () => {
     expect(screen.queryByRole('button', { name: 'Install' })).not.toBeInTheDocument()
   })
 
-  it('is dismissed and stays dismissed', () => {
-    const { container } = render(<InstallPrompt />)
+  it('is dismissed and stays dismissed across a remount', () => {
+    const first = render(<InstallPrompt />)
     offerInstall()
 
     fireEvent.click(screen.getByRole('button', { name: 'Dismiss install prompt' }))
 
-    expect(container).toBeEmptyDOMElement()
+    expect(first.container).toBeEmptyDOMElement()
     expect(window.localStorage.getItem('mello:install-dismissed')).toBeTruthy()
+    first.unmount()
+
+    const second = render(<InstallPrompt />)
+    offerInstall()
+
+    expect(second.container).toBeEmptyDOMElement()
   })
 })

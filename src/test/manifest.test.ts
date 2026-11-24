@@ -96,8 +96,9 @@ describe('offline service worker', () => {
   })
 
   it('carries no hard-coded base path', () => {
-    // One build has to work at /mello/ and /mello-framer/ alike.
+    // The cached shell URL must not assume either deployment prefix.
     expect(serviceWorker).not.toContain('/mello/')
+    expect(serviceWorker).not.toContain('/mello-framer/')
     expect(serviceWorker).toContain("'index.html'")
   })
 
@@ -105,8 +106,14 @@ describe('offline service worker', () => {
     expect(serviceWorker).toContain("self.addEventListener('install'")
     expect(serviceWorker).toContain("self.addEventListener('activate'")
     expect(serviceWorker).toContain("self.addEventListener('fetch'")
-    expect(serviceWorker).toMatch(/const CACHE = `mello-\$\{VERSION\}`/)
+    expect(serviceWorker).toContain("const CACHE_PREFIX = 'mello-'")
+    expect(serviceWorker).toContain('const CACHE = `${CACHE_PREFIX}${VERSION}`')
     // Cache writes only ever apply to safe, replayable requests.
     expect(serviceWorker).toContain("request.method !== 'GET'")
+  })
+
+  it('cleans up only its own cache namespace', () => {
+    // CacheStorage is origin-wide; other apps' caches must survive an update.
+    expect(serviceWorker).toContain('key.startsWith(CACHE_PREFIX)')
   })
 })

@@ -108,6 +108,10 @@
   .install-prompt-body {
     flex: 1 1 0;
   }
+  /* Force the button onto its own full-width row, whatever `.btn` does. */
+  .install-prompt-action {
+    flex-basis: 100%;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

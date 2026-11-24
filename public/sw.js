@@ -13,10 +13,11 @@
  *     the background.
  *
  * Bump VERSION when the caching rules themselves change: activate drops every
- * cache whose name does not carry the current version.
+ * cache in our own namespace that does not carry the current version.
  */
 const VERSION = 'v1'
-const CACHE = `mello-${VERSION}`
+const CACHE_PREFIX = 'mello-'
+const CACHE = `${CACHE_PREFIX}${VERSION}`
 // Resolved against this script's location, so it follows the base path.
 const OFFLINE_URL = 'index.html'
 
@@ -24,9 +25,10 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches
       .open(CACHE)
-      // A failed pre-cache must not block activation: the runtime strategies
-      // above still fill the cache on the first online visit.
-      .then((cache) => cache.add(new Request(OFFLINE_URL, { cache: 'reload' })).catch(() => {}))
+      // A failed pre-cache rejects the install: the previous worker and its
+      // cache stay in place, so an interrupted update never drops offline
+      // support. The worker is retried on the next visit.
+      .then((cache) => cache.add(new Request(OFFLINE_URL, { cache: 'reload' })))
       .then(() => self.skipWaiting()),
   )
 })
@@ -35,7 +37,15 @@ self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches
       .keys()
-      .then((keys) => Promise.all(keys.filter((key) => key !== CACHE).map((key) => caches.delete(key))))
+      .then((keys) =>
+        Promise.all(
+          // CacheStorage is shared by the whole origin, so only our own
+          // namespace is touched — never another app's caches.
+          keys
+            .filter((key) => key.startsWith(CACHE_PREFIX) && key !== CACHE)
+            .map((key) => caches.delete(key)),
+        ),
+      )
       .then(() => self.clients.claim()),
   )
 })
@@ -55,8 +65,32 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(cacheFirst(request))
     return
   }
-  event.respondWith(staleWhileRevalidate(request))
+
+  // stale-while-revalidate. Both promises are registered synchronously, on the
+  // event, so the worker is kept alive until the background refresh — and its
+  // cache write — have finished.
+  const refresh = revalidate(request)
+  event.waitUntil(refresh.catch(() => {}))
+  event.respondWith(fromCacheOr(request, refresh))
 })
+
+async function fromCacheOr(request, refresh) {
+  const cache = await caches.open(CACHE)
+  const cached = await cache.match(request)
+  if (cached) return cached
+  try {
+    return await refresh
+  } catch {
+    return Response.error()
+  }
+}
+
+async function revalidate(request) {
+  const cache = await caches.open(CACHE)
+  const response = await fetch(request)
+  if (response.ok) await cache.put(request, response.clone())
+  return response
+}
 
 async function networkFirst(request) {
   const cache = await caches.open(CACHE)
@@ -77,16 +111,4 @@ async function cacheFirst(request) {
   const response = await fetch(request)
   if (response.ok) await cache.put(request, response.clone())
   return response
-}
-
-async function staleWhileRevalidate(request) {
-  const cache = await caches.open(CACHE)
-  const cached = await cache.match(request)
-  const network = fetch(request)
-    .then((response) => {
-      if (response.ok) cache.put(request, response.clone())
-      return response
-    })
-    .catch(() => cached)
-  return cached || network
 }
