@@ -1,0 +1,124 @@
+/* ---------- Install prompt ----------
+ * A floating "add to home screen" card. It reuses the site's own recipe rather
+ * than inventing one: cream surface, ink frame, 20px radius and the grass
+ * `.btn-primary`. Anchored bottom centre, above the content but below the skip
+ * link, so it never blocks navigation or the header.
+ */
+.install-prompt {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: min(100% - 32px, 480px);
+  margin: 0 auto;
+  padding: 14px 48px 14px 16px;
+  border: 2px solid var(--ink);
+  border-radius: 20px;
+  background: var(--cream);
+  color: var(--ink);
+  box-shadow: 0 22px 48px -24px rgba(40, 64, 16, 0.55);
+  font-family: Inter, sans-serif;
+  animation: install-prompt-in 0.32s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.install-prompt-logo {
+  flex: none;
+  display: block;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--grass);
+}
+.install-prompt-body {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.install-prompt-title {
+  margin: 0;
+  font:
+    400 22px/1.1 'Londrina Solid',
+    sans-serif;
+  letter-spacing: -0.22px;
+  font-feature-settings: 'blwf', 'cv03', 'cv04', 'cv09', 'cv11';
+}
+.install-prompt-message {
+  margin: 2px 0 0;
+  font:
+    500 13px/1.35 Inter,
+    sans-serif;
+  letter-spacing: -0.13px;
+  color: rgba(40, 64, 16, 0.8);
+}
+.install-prompt-action {
+  flex: none;
+  padding: 12px 20px;
+  border: 0;
+  border-radius: 16px;
+  font-size: 16px;
+}
+.install-prompt-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+  font:
+    500 20px/1 Inter,
+    sans-serif;
+  cursor: pointer;
+  transition: background-color 0.2s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.install-prompt-close:hover {
+  background: rgba(40, 64, 16, 0.08);
+}
+.install-prompt-close:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+@keyframes install-prompt-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile: the button drops to its own full-width row under the text, matching
+ * how `.btn` already stacks under the hero title. */
+@media (max-width: 767.98px) {
+  .install-prompt {
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 14px 44px 14px 14px;
+  }
+  .install-prompt-body {
+    flex: 1 1 0;
+  }
+  /* Force the button onto its own full-width row, whatever `.btn` does. */
+  .install-prompt-action {
+    flex-basis: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .install-prompt {
+    animation: none;
+  }
+  .install-prompt-close {
+    transition: none;
+  }
+}

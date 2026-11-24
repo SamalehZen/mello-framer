@@ -80,3 +80,40 @@ describe('installable app manifest', () => {
     }
   })
 })
+
+// The install prompt and the offline worker are invisible to a build: nothing
+// breaks on screen if `sw.js` disappears or the registration path drifts from
+// the configured base. These checks keep the install path whole, the same way
+// the manifest assertions above do.
+const serviceWorker = readText('public/sw.js')
+const registration = readText('src/lib/serviceWorker.ts')
+
+describe('offline service worker', () => {
+  it('is registered from the configured base, production only', () => {
+    expect(registration).toContain('${import.meta.env.BASE_URL}sw.js')
+    // A dev-mode worker would cache Vite's module graph and go stale on edit.
+    expect(registration).toContain('import.meta.env.PROD')
+  })
+
+  it('carries no hard-coded base path', () => {
+    // The cached shell URL must not assume either deployment prefix.
+    expect(serviceWorker).not.toContain('/mello/')
+    expect(serviceWorker).not.toContain('/mello-framer/')
+    expect(serviceWorker).toContain("'index.html'")
+  })
+
+  it('handles fetches and versions its cache', () => {
+    expect(serviceWorker).toContain("self.addEventListener('install'")
+    expect(serviceWorker).toContain("self.addEventListener('activate'")
+    expect(serviceWorker).toContain("self.addEventListener('fetch'")
+    expect(serviceWorker).toContain("const CACHE_PREFIX = 'mello-'")
+    expect(serviceWorker).toContain('const CACHE = `${CACHE_PREFIX}${VERSION}`')
+    // Cache writes only ever apply to safe, replayable requests.
+    expect(serviceWorker).toContain("request.method !== 'GET'")
+  })
+
+  it('cleans up only its own cache namespace', () => {
+    // CacheStorage is origin-wide; other apps' caches must survive an update.
+    expect(serviceWorker).toContain('key.startsWith(CACHE_PREFIX)')
+  })
+})

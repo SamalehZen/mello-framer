@@ -11,6 +11,7 @@ import Atmosphere from '@/sections/Atmosphere'
 import Testimonials from '@/sections/Testimonials'
 import Visit from '@/sections/Visit'
 import Footer from '@/sections/Footer'
+import InstallPrompt from '@/components/InstallPrompt'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 
 export default function App() {
@@ -39,6 +40,7 @@ export default function App() {
         <Visit />
         <Footer />
       </main>
+      <InstallPrompt />
     </>
   )
 }
