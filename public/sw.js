@@ -88,15 +88,27 @@ async function fromCacheOr(request, refresh) {
 async function revalidate(request) {
   const cache = await caches.open(CACHE)
   const response = await fetch(request)
-  if (response.ok) await cache.put(request, response.clone())
+  if (response.ok) await cachePut(cache, request, response.clone())
   return response
+}
+
+/**
+ * Writes to the cache without letting a storage failure (quota, a response that
+ * cannot be stored) discard the network copy the caller is about to return.
+ */
+async function cachePut(cache, request, response) {
+  try {
+    await cache.put(request, response)
+  } catch {
+    // Keep the fetched response; the entry simply is not cached.
+  }
 }
 
 async function networkFirst(request) {
   const cache = await caches.open(CACHE)
   try {
     const response = await fetch(request)
-    if (response.ok) await cache.put(request, response.clone())
+    if (response.ok) await cachePut(cache, request, response.clone())
     return response
   } catch {
     return (await cache.match(request)) || (await cache.match(OFFLINE_URL)) || Response.error()
@@ -109,6 +121,6 @@ async function cacheFirst(request) {
   if (cached) return cached
 
   const response = await fetch(request)
-  if (response.ok) await cache.put(request, response.clone())
+  if (response.ok) await cachePut(cache, request, response.clone())
   return response
 }
